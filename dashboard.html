@@ -10,7 +10,7 @@
 <!-- Font Awesome 6 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
 
 <style>
 * {
@@ -24,207 +24,221 @@ body {
     font-family: 'Inter', sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
-    padding: 8px;
+    padding: 16px 12px;
 }
 
 .dashboard-container {
-    max-width: 95%;
+    max-width: 500px;
     margin: 0 auto;
 }
 
-/* Compact welcome bar */
+/* Enhanced Welcome Bar */
 .welcome-bar {
-    background: rgba(255, 255, 255, 0.96);
-    border-radius: 20px;
-    padding: 10px 14px;
-    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 24px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .user-compact {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 14px;
 }
 
 .avatar-sm {
-    width: 38px;
-    height: 38px;
+    width: 52px;
+    height: 52px;
     background: linear-gradient(135deg, #667eea, #764ba2);
-    border-radius: 12px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .user-text h5 {
-    font-size: 0.9rem;
-    font-weight: 700;
+    font-size: 1.1rem;
+    font-weight: 800;
     margin: 0;
-    line-height: 1.2;
+    line-height: 1.3;
     color: #1e293b;
 }
 
 .user-text p {
-    font-size: 0.6rem;
-    margin: 0;
+    font-size: 0.7rem;
+    margin: 4px 0 0;
     color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .logout-btn-sm {
-    background: rgba(220, 53, 69, 0.9);
+    background: rgba(220, 53, 69, 0.95);
     border: none;
-    padding: 6px 12px;
-    border-radius: 30px;
+    padding: 10px 18px;
+    border-radius: 40px;
     color: white;
-    font-size: 0.7rem;
-    font-weight: 600;
+    font-size: 0.8rem;
+    font-weight: 700;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
 }
 
-/* DateTime compact */
+.logout-btn-sm:active {
+    transform: scale(0.96);
+}
+
+/* DateTime - Enhanced */
 .datetime-compact {
-    background: rgba(0,0,0,0.05);
-    border-radius: 20px;
-    padding: 6px 12px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: 12px 16px;
     text-align: center;
-    margin-bottom: 10px;
-    font-size: 0.7rem;
+    margin-bottom: 16px;
+    font-size: 0.85rem;
     color: white;
-    font-weight: 500;
-    backdrop-filter: blur(4px);
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
-/* Stats row - 2 cards */
+/* Stats row - Larger */
 .stats-row {
     display: flex;
-    gap: 10px;
-    margin-bottom: 12px;
+    gap: 12px;
+    margin-bottom: 16px;
 }
 
 .stat-box {
     background: white;
     flex: 1;
-    border-radius: 16px;
-    padding: 12px 8px;
+    border-radius: 24px;
+    padding: 18px 12px;
     text-align: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .stat-icon-sm {
-    font-size: 1.2rem;
-    margin-bottom: 6px;
+    font-size: 1.6rem;
+    margin-bottom: 8px;
 }
 
 .stat-label-sm {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     color: #64748b;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.5px;
 }
 
 .stat-value-sm {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 800;
     color: #0f172a;
     line-height: 1.2;
+    margin-top: 6px;
 }
 
-/* Cash & UPI Balance Row */
+/* Cash & UPI Balance Row - Enhanced */
 .balance-row {
     display: flex;
-    gap: 10px;
-    margin-bottom: 12px;
+    gap: 12px;
+    margin-bottom: 16px;
 }
 
 .balance-card {
     background: white;
     flex: 1;
-    border-radius: 16px;
-    padding: 10px 8px;
+    border-radius: 24px;
+    padding: 14px 12px;
     text-align: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .balance-icon {
-    font-size: 1rem;
-    margin-bottom: 4px;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
 }
 
 .balance-label {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     color: #64748b;
     font-weight: 600;
 }
 
 .balance-amount {
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-weight: 800;
-    margin-top: 4px;
+    margin-top: 6px;
 }
 
 .cash-color { color: #28a745; }
 .upi-color { color: #6f42c1; }
 
-/* Month Stats Row */
+/* Month Stats Row - Enhanced */
 .month-row {
     display: flex;
-    gap: 10px;
-    margin-bottom: 12px;
+    gap: 12px;
+    margin-bottom: 20px;
 }
 
 .month-card {
     background: white;
     flex: 1;
-    border-radius: 16px;
-    padding: 10px 8px;
+    border-radius: 24px;
+    padding: 14px 12px;
     text-align: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .month-icon {
-    font-size: 1rem;
-    margin-bottom: 4px;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
 }
 
 .month-label {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     color: #64748b;
     font-weight: 600;
 }
 
 .month-value {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 800;
-    margin-top: 4px;
+    margin-top: 6px;
 }
 
 .income-color { color: #28a745; }
 .expense-color { color: #dc3545; }
 
-/* 5 buttons grid - compact (updated for 5 buttons) */
+/* 5 Action Buttons - Larger & Better */
 .actions-grid-compact {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 6px;
-    margin-bottom: 12px;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
 .action-card {
     background: white;
-    border-radius: 14px;
-    padding: 8px 2px;
+    border-radius: 20px;
+    padding: 14px 6px;
     text-align: center;
     text-decoration: none;
     transition: all 0.2s;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
 .action-card:active {
@@ -232,20 +246,20 @@ body {
 }
 
 .action-icon-compact {
-    font-size: 1.1rem;
-    margin-bottom: 4px;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
 }
 
 .action-title-compact {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     font-weight: 700;
     margin: 0;
 }
 
 .action-sub-compact {
-    font-size: 0.5rem;
-    opacity: 0.7;
-    margin: 0;
+    font-size: 0.55rem;
+    opacity: 0.8;
+    margin: 2px 0 0;
 }
 
 .income-bg { background: linear-gradient(135deg, #28a745, #20c997); color: white; }
@@ -254,68 +268,94 @@ body {
 .account-bg { background: linear-gradient(135deg, #6f42c1, #a855f7); color: white; }
 .transfer-bg { background: linear-gradient(135deg, #fd7e14, #ffc107); color: white; }
 
-/* Info Note */
+/* Info Note - Enhanced */
 .info-note {
     background: rgba(255,255,255,0.9);
-    border-radius: 12px;
-    padding: 8px;
+    border-radius: 20px;
+    padding: 12px;
     text-align: center;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     color: #475569;
-    margin-top: 10px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
+/* Mobile Responsive - Larger touch targets */
 @media (max-width: 480px) {
     body {
-        padding: 6px;
+        padding: 12px 10px;
     }
     
-    .actions-grid-compact {
-        gap: 5px;
-    }
-    
-    .action-card {
-        padding: 6px 2px;
-    }
-    
-    .action-icon-compact {
-        font-size: 0.95rem;
-    }
-    
-    .action-title-compact {
-        font-size: 0.55rem;
-    }
-    
-    .action-sub-compact {
-        font-size: 0.45rem;
-    }
-    
-    .stat-value-sm {
-        font-size: 1rem;
-    }
-    
-    .balance-amount, .month-value {
-        font-size: 0.85rem;
+    .welcome-bar {
+        padding: 12px 16px;
     }
     
     .avatar-sm {
-        width: 34px;
-        height: 34px;
-        font-size: 0.9rem;
+        width: 48px;
+        height: 48px;
+        font-size: 1.3rem;
     }
     
     .user-text h5 {
-        font-size: 0.8rem;
+        font-size: 1rem;
+    }
+    
+    .logout-btn-sm {
+        padding: 8px 14px;
+        font-size: 0.75rem;
+    }
+    
+    .stat-box {
+        padding: 14px 10px;
+    }
+    
+    .stat-value-sm {
+        font-size: 1.3rem;
+    }
+    
+    .balance-amount, .month-value {
+        font-size: 1.1rem;
+    }
+    
+    .actions-grid-compact {
+        gap: 8px;
+    }
+    
+    .action-card {
+        padding: 12px 4px;
+    }
+    
+    .action-icon-compact {
+        font-size: 1.3rem;
+    }
+    
+    .action-title-compact {
+        font-size: 0.7rem;
+    }
+    
+    .action-sub-compact {
+        font-size: 0.5rem;
     }
 }
 
 @media (max-width: 380px) {
-    .action-title-compact {
-        font-size: 0.5rem;
+    .action-icon-compact {
+        font-size: 1.1rem;
     }
     
-    .action-icon-compact {
-        font-size: 0.85rem;
+    .action-title-compact {
+        font-size: 0.65rem;
+    }
+    
+    .stat-value-sm {
+        font-size: 1.1rem;
+    }
+    
+    .balance-amount {
+        font-size: 0.95rem;
     }
 }
 </style>
@@ -324,7 +364,7 @@ body {
 
 <div class="dashboard-container">
     
-    <!-- Compact Welcome Bar -->
+    <!-- Enhanced Welcome Bar -->
     <div class="welcome-bar">
         <div class="user-compact">
             <div class="avatar-sm" id="userAvatar">
@@ -332,7 +372,7 @@ body {
             </div>
             <div class="user-text">
                 <h5 id="userName">Loading...</h5>
-                <p><i class="fas fa-bolt"></i> Dashboard</p>
+                <p><i class="fas fa-chart-line"></i> Financial Dashboard</p>
             </div>
         </div>
         <button onclick="logout()" class="logout-btn-sm">
@@ -342,7 +382,7 @@ body {
     
     <!-- Date Time with Seconds -->
     <div class="datetime-compact" id="datetime">
-        <i class="far fa-clock"></i> Loading...
+        <i class="far fa-calendar-alt"></i> Loading...
     </div>
     
     <!-- Total Balance Row -->
@@ -382,17 +422,17 @@ body {
         </div>
     </div>
     
-    <!-- 5 Action Buttons - Compact Grid (Added Transfer) -->
+    <!-- 5 Action Buttons - Enhanced -->
     <div class="actions-grid-compact">
         <a href="income.html" class="action-card income-bg">
             <div class="action-icon-compact"><i class="fas fa-arrow-down"></i></div>
             <div class="action-title-compact">Income</div>
-            <div class="action-sub-compact">Add</div>
+            <div class="action-sub-compact">Add Money</div>
         </a>
         <a href="expense.html" class="action-card expense-bg">
             <div class="action-icon-compact"><i class="fas fa-arrow-up"></i></div>
             <div class="action-title-compact">Expense</div>
-            <div class="action-sub-compact">Add</div>
+            <div class="action-sub-compact">Spend</div>
         </a>
         <a href="transfer.html" class="action-card transfer-bg">
             <div class="action-icon-compact"><i class="fas fa-exchange-alt"></i></div>
@@ -402,17 +442,18 @@ body {
         <a href="salary.html" class="action-card salary-bg">
             <div class="action-icon-compact"><i class="fas fa-money-bill"></i></div>
             <div class="action-title-compact">Salary</div>
-            <div class="action-sub-compact">Set</div>
+            <div class="action-sub-compact">Manage</div>
         </a>
         <a href="account.html" class="action-card account-bg">
             <div class="action-icon-compact"><i class="fas fa-user"></i></div>
             <div class="action-title-compact">Account</div>
-            <div class="action-sub-compact">Profile</div>
+            <div class="action-sub-compact">Details</div>
         </a>
     </div>
     
     <div class="info-note">
-        <i class="fas fa-database"></i> Data synced with cloud • Last 30 days summary
+        <i class="fas fa-cloud-upload-alt"></i>
+        <span>Auto-sync enabled • Real-time updates</span>
     </div>
 </div>
 
@@ -426,21 +467,21 @@ const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const client = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 // Get user from localStorage
-let userId = localStorage.getItem("username") || localStorage.getItem("username");
+let userId = localStorage.getItem("username") || localStorage.getItem("user_id");
 
 if(!userId){
     window.location.href = "index.html";
 }
 
 // Display username
-document.getElementById("userName").innerText = userId.length > 12 ? userId.substring(0,10)+".." : userId;
+document.getElementById("userName").innerText = userId.length > 15 ? userId.substring(0,12)+".." : userId;
 const avatar = document.getElementById("userAvatar");
 avatar.innerHTML = userId.charAt(0).toUpperCase();
 
 // Date & Time Function with seconds
 function updateDateTime(){
     let now = new Date();
-    let dateStr = now.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+    let dateStr = now.toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
     let timeStr = now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
     document.getElementById("datetime").innerHTML = `<i class="far fa-calendar-alt"></i> ${dateStr} | ${timeStr}`;
 }
@@ -469,16 +510,12 @@ async function loadAccountBalance() {
         }
     } catch(error) {
         console.error("Balance load error:", error);
-        document.getElementById("cashBalance").innerHTML = "₹0";
-        document.getElementById("upiBalance").innerHTML = "₹0";
-        document.getElementById("totalBalance").innerHTML = "₹0";
     }
 }
 
 // Load This Month Income & Expense
 async function loadMonthStats() {
     try {
-        // Get current month start and end dates
         const now = new Date();
         const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
         const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
@@ -517,8 +554,6 @@ async function loadMonthStats() {
         
     } catch(error) {
         console.error("Month stats error:", error);
-        document.getElementById("monthIncome").innerHTML = "₹0";
-        document.getElementById("monthExpense").innerHTML = "₹0";
     }
 }
 
