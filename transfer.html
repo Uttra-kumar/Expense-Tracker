@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>Transfer | Smart Finance</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 12px;
+}
+
+.container-custom {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.header-bar {
+    background: white;
+    border-radius: 20px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: #667eea;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 40px;
+    cursor: pointer;
+}
+
+.user-badge {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 6px 14px;
+    border-radius: 40px;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Balance Cards */
+.balance-cards {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.balance-card {
+    background: white;
+    flex: 1;
+    border-radius: 20px;
+    padding: 15px 10px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.balance-icon {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+
+.balance-label {
+    font-size: 0.7rem;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.balance-amount {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-top: 5px;
+}
+
+.cash-color { color: #28a745; }
+.upi-color { color: #6f42c1; }
+
+/* Transfer Card */
+.transfer-card {
+    background: white;
+    border-radius: 24px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.transfer-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.transfer-direction {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.direction-box {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid #e2e8f0;
+}
+
+.direction-box.active {
+    border-color: #667eea;
+    background: #f5f3ff;
+}
+
+.direction-box i {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.direction-box .from-text {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.direction-box .to-text {
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.arrow-icon {
+    font-size: 1.5rem;
+    color: #667eea;
+}
+
+.input-group-custom {
+    margin-bottom: 20px;
+}
+
+.input-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-control-custom {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 12px;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.form-control-custom:focus {
+    border-color: #667eea;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+}
+
+.btn-transfer {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    padding: 14px;
+    border-radius: 40px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    width: 100%;
+    color: white;
+    transition: transform 0.1s;
+}
+
+.btn-transfer:active {
+    transform: scale(0.98);
+}
+
+.warning-text {
+    font-size: 0.65rem;
+    color: #dc3545;
+    margin-top: 8px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.success-text {
+    font-size: 0.65rem;
+    color: #28a745;
+    margin-top: 8px;
+    text-align: center;
+}
+
+/* Transfer History */
+.history-card {
+    background: white;
+    border-radius: 24px;
+    padding: 12px;
+    margin-bottom: 20px;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #eef2f6;
+}
+
+.history-header h6 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.clear-btn {
+    background: none;
+    border: none;
+    color: #dc3545;
+    font-size: 0.6rem;
+    font-weight: 600;
+}
+
+.history-list {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.history-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eef2f6;
+}
+
+.history-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.history-details {
+    flex: 1;
+    margin-left: 12px;
+}
+
+.history-title {
+    font-weight: 600;
+    font-size: 0.75rem;
+    margin: 0;
+}
+
+.history-time {
+    font-size: 0.55rem;
+    color: #94a3b8;
+}
+
+.history-amount {
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    color: #94a3b8;
+}
+
+.empty-state i {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: 0.7rem;
+    margin: 0;
+}
+
+.toast-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    z-index: 1001;
+    animation: fadeInUp 0.3s ease;
+    white-space: nowrap;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .balance-amount {
+        font-size: 1rem;
+    }
+    .direction-box i {
+        font-size: 1.2rem;
+    }
+    .direction-box .to-text {
+        font-size: 0.7rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container-custom">
+    
+    <div class="header-bar">
+        <button onclick="goBack()" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <div class="user-badge">
+            <i class="fas fa-exchange-alt"></i> Transfer
+        </div>
+    </div>
+    
+    <!-- Balance Cards -->
+    <div class="balance-cards">
+        <div class="balance-card">
+            <div class="balance-icon"><i class="fas fa-money-bill-wave" style="color: #28a745;"></i></div>
+            <div class="balance-label">Cash Balance</div>
+            <div class="balance-amount cash-color" id="cashBalance">₹0</div>
+        </div>
+        <div class="balance-card">
+            <div class="balance-icon"><i class="fas fa-mobile-alt" style="color: #6f42c1;"></i></div>
+            <div class="balance-label">UPI Balance</div>
+            <div class="balance-amount upi-color" id="upiBalance">₹0</div>
+        </div>
+    </div>
+    
+    <!-- Transfer Card -->
+    <div class="transfer-card">
+        <div class="transfer-title">
+            <i class="fas fa-exchange-alt"></i>
+            <span>Money Transfer</span>
+        </div>
+        
+        <!-- Transfer Direction Selection -->
+        <div class="transfer-direction">
+            <div class="direction-box" id="cashToUpi" onclick="selectDirection('cashToUpi')">
+                <i class="fas fa-money-bill-wave" style="color: #28a745;"></i>
+                <div class="from-text">From</div>
+                <div class="to-text">CASH</div>
+            </div>
+            <div class="arrow-icon">
+                <i class="fas fa-arrow-right"></i>
+            </div>
+            <div class="direction-box" id="upiToCash" onclick="selectDirection('upiToCash')">
+                <i class="fas fa-mobile-alt" style="color: #6f42c1;"></i>
+                <div class="from-text">To</div>
+                <div class="to-text">UPI</div>
+            </div>
+        </div>
+        
+        <!-- Amount Input -->
+        <div class="input-group-custom">
+            <div class="input-label">
+                <i class="fas fa-rupee-sign"></i>
+                <span>Transfer Amount (₹)</span>
+            </div>
+            <input type="number" id="amount" class="form-control-custom" placeholder="Enter amount to transfer">
+        </div>
+        
+        <!-- Transfer Button -->
+        <button onclick="transfer()" class="btn-transfer">
+            <i class="fas fa-exchange-alt"></i> Transfer Money
+        </button>
+        
+        <div id="warningMsg" class="warning-text"></div>
+    </div>
+    
+    <!-- Transfer History -->
+    <div class="history-card">
+        <div class="history-header">
+            <h6><i class="fas fa-history"></i> Transfer History (Last 5)</h6>
+            <button onclick="clearHistory()" class="clear-btn">
+                <i class="fas fa-trash"></i> Clear
+            </button>
+        </div>
+        <div id="historyList" class="history-list">
+            <div class="empty-state">
+                <i class="fas fa-exchange-alt"></i>
+                <p>No transfers yet</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const supabaseUrl = "https://iydamvrlxtwsnqvflaxq.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml5ZGFtdnJseHR3c25xdmZsYXhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgwOTczMTIsImV4cCI6MjA3MzY3MzMxMn0.Z8m6XGyu9wsN_UJ8EZYr12BRemsO12_U8EEZ9JizQ6w";
+
+const client = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+let currentDirection = 'cashToUpi'; // Default: Cash to UPI
+let userId = null;
+
+// Get user
+function getUser() {
+    userId = localStorage.getItem("username") || localStorage.getItem("username");
+    if(!userId) {
+        window.location.href = "index.html";
+    }
+}
+getUser();
+
+// Select transfer direction
+function selectDirection(direction) {
+    currentDirection = direction;
+    
+    const cashToUpiBox = document.getElementById("cashToUpi");
+    const upiToCashBox = document.getElementById("upiToCash");
+    
+    if(direction === 'cashToUpi') {
+        cashToUpiBox.classList.add('active');
+        upiToCashBox.classList.remove('active');
+        cashToUpiBox.querySelector('.from-text').innerHTML = 'From';
+        cashToUpiBox.querySelector('.to-text').innerHTML = 'CASH';
+        upiToCashBox.querySelector('.from-text').innerHTML = 'To';
+        upiToCashBox.querySelector('.to-text').innerHTML = 'UPI';
+    } else {
+        upiToCashBox.classList.add('active');
+        cashToUpiBox.classList.remove('active');
+        cashToUpiBox.querySelector('.from-text').innerHTML = 'From';
+        cashToUpiBox.querySelector('.to-text').innerHTML = 'CASH';
+        upiToCashBox.querySelector('.from-text').innerHTML = 'To';
+        upiToCashBox.querySelector('.to-text').innerHTML = 'UPI';
+    }
+}
+
+// Load current balances
+async function loadBalances() {
+    try {
+        const { data, error } = await client
+            .from('account')
+            .select('cash, upi')
+            .eq('id', 1)
+            .single();
+        
+        if(error) throw error;
+        
+        if(data) {
+            document.getElementById("cashBalance").innerHTML = `₹${(data.cash || 0).toLocaleString('en-IN')}`;
+            document.getElementById("upiBalance").innerHTML = `₹${(data.upi || 0).toLocaleString('en-IN')}`;
+        }
+    } catch(error) {
+        console.error("Balance load error:", error);
+    }
+}
+
+// Update account balance
+async function updateBalance(mode, amount, operation) {
+    try {
+        if(operation === 'add') {
+            if(mode === 'cash') {
+                const { error } = await client.rpc('increase_cash', { amt: amount });
+                if(error) throw error;
+            } else {
+                const { error } = await client.rpc('increase_upi', { amt: amount });
+                if(error) throw error;
+            }
+        } else {
+            if(mode === 'cash') {
+                const { error } = await client.rpc('decrease_cash', { amt: amount });
+                if(error) throw error;
+            } else {
+                const { error } = await client.rpc('decrease_upi', { amt: amount });
+                if(error) throw error;
+            }
+        }
+        return true;
+    } catch(error) {
+        console.error("Update error:", error);
+        return false;
+    }
+}
+
+// Save transfer to history
+function saveTransferToHistory(from, to, amount, status) {
+    let transfers = localStorage.getItem(`transfers_${userId}`);
+    transfers = transfers ? JSON.parse(transfers) : [];
+    
+    transfers.unshift({
+        id: Date.now(),
+        from: from,
+        to: to,
+        amount: amount,
+        status: status,
+        date: new Date().toISOString()
+    });
+    
+    // Keep only last 5 transfers
+    transfers = transfers.slice(0, 5);
+    
+    localStorage.setItem(`transfers_${userId}`, JSON.stringify(transfers));
+    loadTransferHistory();
+}
+
+// Load transfer history
+function loadTransferHistory() {
+    const historyDiv = document.getElementById("historyList");
+    let transfers = localStorage.getItem(`transfers_${userId}`);
+    transfers = transfers ? JSON.parse(transfers) : [];
+    
+    if(transfers.length === 0) {
+        historyDiv.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-exchange-alt"></i>
+                <p>No transfers yet</p>
+            </div>
+        `;
+        return;
+    }
+    
+    let html = "";
+    transfers.forEach(transfer => {
+        const isCashToUpi = transfer.from === 'CASH';
+        const bgColor = isCashToUpi ? '#e6f7e6' : '#f3e8ff';
+        const iconColor = isCashToUpi ? '#28a745' : '#6f42c1';
+        const icon = isCashToUpi ? 'fa-money-bill-wave' : 'fa-mobile-alt';
+        const date = new Date(transfer.date);
+        const timeAgo = getTimeAgo(date);
+        
+        html += `
+            <div class="history-item">
+                <div class="history-icon" style="background: ${bgColor}; color: ${iconColor};">
+                    <i class="fas ${icon}"></i>
+                </div>
+                <div class="history-details">
+                    <div class="history-title">${transfer.from} → ${transfer.to}</div>
+                    <div class="history-time">${timeAgo}</div>
+                </div>
+                <div class="history-amount" style="color: ${iconColor};">-₹${transfer.amount.toLocaleString('en-IN')}</div>
+            </div>
+        `;
+    });
+    
+    historyDiv.innerHTML = html;
+}
+
+// Clear transfer history
+function clearHistory() {
+    if(confirm("Clear all transfer history?")) {
+        localStorage.removeItem(`transfers_${userId}`);
+        loadTransferHistory();
+        showToast("History cleared!", "success");
+    }
+}
+
+// Get time ago
+function getTimeAgo(date) {
+    const seconds = Math.floor((new Date() - date) / 1000);
+    if(seconds < 60) return 'Just now';
+    const minutes = Math.floor(seconds / 60);
+    if(minutes < 60) return `${minutes}m ago`;
+    const hours = Math.floor(minutes / 60);
+    if(hours < 24) return `${hours}h ago`;
+    const days = Math.floor(hours / 24);
+    if(days < 7) return `${days}d ago`;
+    return date.toLocaleDateString('en-IN');
+}
+
+// Main transfer function
+async function transfer() {
+    let amount = parseFloat(document.getElementById("amount").value);
+    const warningMsg = document.getElementById("warningMsg");
+    
+    // Validation
+    if(!amount || amount <= 0) {
+        warningMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please enter a valid amount';
+        return;
+    }
+    
+    // Get current balances
+    const { data: balance, error } = await client
+        .from('account')
+        .select('cash, upi')
+        .eq('id', 1)
+        .single();
+    
+    if(error) {
+        warningMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Failed to fetch balances';
+        return;
+    }
+    
+    const cashBalance = balance.cash || 0;
+    const upiBalance = balance.upi || 0;
+    
+    if(currentDirection === 'cashToUpi') {
+        // Cash to UPI Transfer
+        if(cashBalance < amount) {
+            warningMsg.innerHTML = `<i class="fas fa-exclamation-circle"></i> Insufficient Cash Balance! Available: ₹${cashBalance.toLocaleString('en-IN')}`;
+            return;
+        }
+        
+        // Perform transfer
+        const subtractCash = await updateBalance('cash', amount, 'subtract');
+        if(!subtractCash) {
+            warningMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Transfer failed';
+            return;
+        }
+        
+        const addUpi = await updateBalance('upi', amount, 'add');
+        if(!addUpi) {
+            // Rollback if UPI add fails
+            await updateBalance('cash', amount, 'add');
+            warningMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Transfer failed';
+            return;
+        }
+        
+        // Save to history
+        saveTransferToHistory('CASH', 'UPI', amount, 'success');
+        showToast(`✅ Transferred ₹${amount} from Cash to UPI`, "success");
+        warningMsg.innerHTML = '';
+        
+    } else {
+        // UPI to Cash Transfer
+        if(upiBalance < amount) {
+            warningMsg.innerHTML = `<i class="fas fa-exclamation-circle"></i> Insufficient UPI Balance! Available: ₹${upiBalance.toLocaleString('en-IN')}`;
+            return;
+        }
+        
+        // Perform transfer
+        const subtractUpi = await updateBalance('upi', amount, 'subtract');
+        if(!subtractUpi) {
+            warningMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Transfer failed';
+            return;
+        }
+        
+        const addCash = await updateBalance('cash', amount, 'add');
+        if(!addCash) {
+            // Rollback if Cash add fails
+            await updateBalance('upi', amount, 'add');
+            warningMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Transfer failed';
+            return;
+        }
+        
+        // Save to history
+        saveTransferToHistory('UPI', 'CASH', amount, 'success');
+        showToast(`✅ Transferred ₹${amount} from UPI to Cash`, "success");
+        warningMsg.innerHTML = '';
+    }
+    
+    // Clear amount input
+    document.getElementById("amount").value = "";
+    
+    // Refresh balances
+    await loadBalances();
+}
+
+// Show toast message
+function showToast(msg, type = "success") {
+    let toast = document.createElement("div");
+    toast.className = "toast-message";
+    toast.style.background = type === "success" ? "#28a745" : "#dc3545";
+    toast.innerHTML = `<i class="fas fa-${type === "success" ? "check-circle" : "exclamation-circle"}"></i> ${msg}`;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2500);
+}
+
+// Go back
+function goBack() {
+    window.location.href = "dashboard.html";
+}
+
+// Initialize
+async function init() {
+    await loadBalances();
+    loadTransferHistory();
+    selectDirection('cashToUpi');
+    
+    // Auto refresh balances every 10 seconds
+    setInterval(loadBalances, 10000);
+}
+
+init();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+<title>Dashboard | Smart Finance</title>
+
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome 6 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 8px;
+}
+
+.dashboard-container {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+/* Compact welcome bar */
+.welcome-bar {
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 20px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.user-compact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar-sm {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.user-text h5 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+    color: #1e293b;
+}
+
+.user-text p {
+    font-size: 0.6rem;
+    margin: 0;
+    color: #64748b;
+}
+
+.logout-btn-sm {
+    background: rgba(220, 53, 69, 0.9);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 30px;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* DateTime compact */
+.datetime-compact {
+    background: rgba(0,0,0,0.05);
+    border-radius: 20px;
+    padding: 6px 12px;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 0.7rem;
+    color: white;
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+}
+
+/* Stats row - 2 cards */
+.stats-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.stat-box {
+    background: white;
+    flex: 1;
+    border-radius: 16px;
+    padding: 12px 8px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.stat-icon-sm {
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+}
+
+.stat-label-sm {
+    font-size: 0.6rem;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.stat-value-sm {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+}
+
+/* Cash & UPI Balance Row */
+.balance-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.balance-card {
+    background: white;
+    flex: 1;
+    border-radius: 16px;
+    padding: 10px 8px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.balance-icon {
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.balance-label {
+    font-size: 0.6rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.balance-amount {
+    font-size: 1rem;
+    font-weight: 800;
+    margin-top: 4px;
+}
+
+.cash-color { color: #28a745; }
+.upi-color { color: #6f42c1; }
+
+/* Month Stats Row */
+.month-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.month-card {
+    background: white;
+    flex: 1;
+    border-radius: 16px;
+    padding: 10px 8px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.month-icon {
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.month-label {
+    font-size: 0.6rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.month-value {
+    font-size: 1rem;
+    font-weight: 800;
+    margin-top: 4px;
+}
+
+.income-color { color: #28a745; }
+.expense-color { color: #dc3545; }
+
+/* 5 buttons grid - compact (updated for 5 buttons) */
+.actions-grid-compact {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.action-card {
+    background: white;
+    border-radius: 14px;
+    padding: 8px 2px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.action-card:active {
+    transform: scale(0.96);
+}
+
+.action-icon-compact {
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+}
+
+.action-title-compact {
+    font-size: 0.65rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.action-sub-compact {
+    font-size: 0.5rem;
+    opacity: 0.7;
+    margin: 0;
+}
+
+.income-bg { background: linear-gradient(135deg, #28a745, #20c997); color: white; }
+.expense-bg { background: linear-gradient(135deg, #dc3545, #fd7e14); color: white; }
+.salary-bg { background: linear-gradient(135deg, #007bff, #00b4db); color: white; }
+.account-bg { background: linear-gradient(135deg, #6f42c1, #a855f7); color: white; }
+.transfer-bg { background: linear-gradient(135deg, #fd7e14, #ffc107); color: white; }
+
+/* Info Note */
+.info-note {
+    background: rgba(255,255,255,0.9);
+    border-radius: 12px;
+    padding: 8px;
+    text-align: center;
+    font-size: 0.6rem;
+    color: #475569;
+    margin-top: 10px;
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 6px;
+    }
+    
+    .actions-grid-compact {
+        gap: 5px;
+    }
+    
+    .action-card {
+        padding: 6px 2px;
+    }
+    
+    .action-icon-compact {
+        font-size: 0.95rem;
+    }
+    
+    .action-title-compact {
+        font-size: 0.55rem;
+    }
+    
+    .action-sub-compact {
+        font-size: 0.45rem;
+    }
+    
+    .stat-value-sm {
+        font-size: 1rem;
+    }
+    
+    .balance-amount, .month-value {
+        font-size: 0.85rem;
+    }
+    
+    .avatar-sm {
+        width: 34px;
+        height: 34px;
+        font-size: 0.9rem;
+    }
+    
+    .user-text h5 {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .action-title-compact {
+        font-size: 0.5rem;
+    }
+    
+    .action-icon-compact {
+        font-size: 0.85rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    
+    <!-- Compact Welcome Bar -->
+    <div class="welcome-bar">
+        <div class="user-compact">
+            <div class="avatar-sm" id="userAvatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="user-text">
+                <h5 id="userName">Loading...</h5>
+                <p><i class="fas fa-bolt"></i> Dashboard</p>
+            </div>
+        </div>
+        <button onclick="logout()" class="logout-btn-sm">
+            <i class="fas fa-sign-out-alt"></i> Exit
+        </button>
+    </div>
+    
+    <!-- Date Time with Seconds -->
+    <div class="datetime-compact" id="datetime">
+        <i class="far fa-clock"></i> Loading...
+    </div>
+    
+    <!-- Total Balance Row -->
+    <div class="stats-row">
+        <div class="stat-box">
+            <div class="stat-icon-sm"><i class="fas fa-wallet" style="color: #28a745;"></i></div>
+            <div class="stat-label-sm">Total Balance</div>
+            <div class="stat-value-sm" id="totalBalance">₹0</div>
+        </div>
+    </div>
+    
+    <!-- Cash & UPI Balance Row -->
+    <div class="balance-row">
+        <div class="balance-card">
+            <div class="balance-icon"><i class="fas fa-money-bill-wave" style="color: #28a745;"></i></div>
+            <div class="balance-label">Cash Balance</div>
+            <div class="balance-amount cash-color" id="cashBalance">₹0</div>
+        </div>
+        <div class="balance-card">
+            <div class="balance-icon"><i class="fas fa-mobile-alt" style="color: #6f42c1;"></i></div>
+            <div class="balance-label">UPI Balance</div>
+            <div class="balance-amount upi-color" id="upiBalance">₹0</div>
+        </div>
+    </div>
+    
+    <!-- This Month Stats Row -->
+    <div class="month-row">
+        <div class="month-card">
+            <div class="month-icon"><i class="fas fa-arrow-down" style="color: #28a745;"></i></div>
+            <div class="month-label">This Month Income</div>
+            <div class="month-value income-color" id="monthIncome">₹0</div>
+        </div>
+        <div class="month-card">
+            <div class="month-icon"><i class="fas fa-arrow-up" style="color: #dc3545;"></i></div>
+            <div class="month-label">This Month Expense</div>
+            <div class="month-value expense-color" id="monthExpense">₹0</div>
+        </div>
+    </div>
+    
+    <!-- 5 Action Buttons - Compact Grid (Added Transfer) -->
+    <div class="actions-grid-compact">
+        <a href="income.html" class="action-card income-bg">
+            <div class="action-icon-compact"><i class="fas fa-arrow-down"></i></div>
+            <div class="action-title-compact">Income</div>
+            <div class="action-sub-compact">Add</div>
+        </a>
+        <a href="expense.html" class="action-card expense-bg">
+            <div class="action-icon-compact"><i class="fas fa-arrow-up"></i></div>
+            <div class="action-title-compact">Expense</div>
+            <div class="action-sub-compact">Add</div>
+        </a>
+        <a href="transfer.html" class="action-card transfer-bg">
+            <div class="action-icon-compact"><i class="fas fa-exchange-alt"></i></div>
+            <div class="action-title-compact">Transfer</div>
+            <div class="action-sub-compact">Cash↔UPI</div>
+        </a>
+        <a href="salary.html" class="action-card salary-bg">
+            <div class="action-icon-compact"><i class="fas fa-money-bill"></i></div>
+            <div class="action-title-compact">Salary</div>
+            <div class="action-sub-compact">Set</div>
+        </a>
+        <a href="account.html" class="action-card account-bg">
+            <div class="action-icon-compact"><i class="fas fa-user"></i></div>
+            <div class="action-title-compact">Account</div>
+            <div class="action-sub-compact">Profile</div>
+        </a>
+    </div>
+    
+    <div class="info-note">
+        <i class="fas fa-database"></i> Data synced with cloud • Last 30 days summary
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+// Supabase Configuration
+const supabaseUrl = "https://iydamvrlxtwsnqvflaxq.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml5ZGFtdnJseHR3c25xdmZsYXhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgwOTczMTIsImV4cCI6MjA3MzY3MzMxMn0.Z8m6XGyu9wsN_UJ8EZYr12BRemsO12_U8EEZ9JizQ6w";
+
+const client = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+// Get user from localStorage
+let userId = localStorage.getItem("username") || localStorage.getItem("username");
+
+if(!userId){
+    window.location.href = "index.html";
+}
+
+// Display username
+document.getElementById("userName").innerText = userId.length > 12 ? userId.substring(0,10)+".." : userId;
+const avatar = document.getElementById("userAvatar");
+avatar.innerHTML = userId.charAt(0).toUpperCase();
+
+// Date & Time Function with seconds
+function updateDateTime(){
+    let now = new Date();
+    let dateStr = now.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+    let timeStr = now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+    document.getElementById("datetime").innerHTML = `<i class="far fa-calendar-alt"></i> ${dateStr} | ${timeStr}`;
+}
+updateDateTime();
+setInterval(updateDateTime, 1000);
+
+// Load Account Balance
+async function loadAccountBalance() {
+    try {
+        const { data, error } = await client
+            .from('account')
+            .select('cash, upi')
+            .eq('id', 1)
+            .single();
+        
+        if(error) throw error;
+        
+        if(data) {
+            const cash = data.cash || 0;
+            const upi = data.upi || 0;
+            const total = cash + upi;
+            
+            document.getElementById("cashBalance").innerHTML = `₹${cash.toLocaleString('en-IN')}`;
+            document.getElementById("upiBalance").innerHTML = `₹${upi.toLocaleString('en-IN')}`;
+            document.getElementById("totalBalance").innerHTML = `₹${total.toLocaleString('en-IN')}`;
+        }
+    } catch(error) {
+        console.error("Balance load error:", error);
+        document.getElementById("cashBalance").innerHTML = "₹0";
+        document.getElementById("upiBalance").innerHTML = "₹0";
+        document.getElementById("totalBalance").innerHTML = "₹0";
+    }
+}
+
+// Load This Month Income & Expense
+async function loadMonthStats() {
+    try {
+        // Get current month start and end dates
+        const now = new Date();
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+        
+        // Load Income for this month
+        const { data: incomeData, error: incomeError } = await client
+            .from('income')
+            .select('amount')
+            .gte('created_at', startOfMonth.toISOString())
+            .lte('created_at', endOfMonth.toISOString());
+        
+        if(incomeError) throw incomeError;
+        
+        // Load Expense for this month
+        const { data: expenseData, error: expenseError } = await client
+            .from('expense')
+            .select('amount')
+            .gte('created_at', startOfMonth.toISOString())
+            .lte('created_at', endOfMonth.toISOString());
+        
+        if(expenseError) throw expenseError;
+        
+        let totalIncome = 0;
+        let totalExpense = 0;
+        
+        if(incomeData) {
+            totalIncome = incomeData.reduce((sum, item) => sum + (item.amount || 0), 0);
+        }
+        
+        if(expenseData) {
+            totalExpense = expenseData.reduce((sum, item) => sum + (item.amount || 0), 0);
+        }
+        
+        document.getElementById("monthIncome").innerHTML = `₹${totalIncome.toLocaleString('en-IN')}`;
+        document.getElementById("monthExpense").innerHTML = `₹${totalExpense.toLocaleString('en-IN')}`;
+        
+    } catch(error) {
+        console.error("Month stats error:", error);
+        document.getElementById("monthIncome").innerHTML = "₹0";
+        document.getElementById("monthExpense").innerHTML = "₹0";
+    }
+}
+
+// Refresh all data
+async function refreshDashboard() {
+    await loadAccountBalance();
+    await loadMonthStats();
+}
+
+// Logout function
+function logout() {
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("username");
+    localStorage.removeItem("login_timestamp");
+    window.location.href = "index.html";
+}
+
+// Auto refresh every 30 seconds
+setInterval(() => {
+    refreshDashboard();
+}, 30000);
+
+// Initial load
+refreshDashboard();
+</script>
+
+</body>
+</html>

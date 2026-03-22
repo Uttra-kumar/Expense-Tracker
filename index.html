@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+<title>Secure Login | Mobile Optimized</title>
+
+<!-- Bootstrap 5 CSS - lightweight and responsive -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome 6 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(145deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    position: relative;
+}
+
+/* Main container - compact but comfortable for mobile */
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* Card - smaller padding for mobile */
+.login-card {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 28px;
+    padding: 1.5rem 1.25rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255,255,255,0.4);
+}
+
+/* Compact brand section */
+.brand-icon {
+    text-align: center;
+    margin-bottom: 0.75rem;
+}
+
+.brand-icon i {
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.login-title {
+    font-weight: 700;
+    font-size: 1.6rem;
+    text-align: center;
+    margin-bottom: 0.2rem;
+    color: #1a202c;
+    letter-spacing: -0.3px;
+}
+
+.login-sub {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #718096;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.login-sub i {
+    font-size: 0.7rem;
+    color: #667eea;
+}
+
+/* Form fields - larger touch targets for mobile */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+    color: #2d3748;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-label i {
+    color: #667eea;
+    font-size: 0.8rem;
+    width: 18px;
+}
+
+/* Input wrapper - big tap area */
+.input-wrapper {
+    background: #f7fafc;
+    border-radius: 16px;
+    border: 1.5px solid #e2e8f0;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    min-height: 52px;
+}
+
+.input-wrapper:focus-within {
+    border-color: #667eea;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.input-icon {
+    color: #a0aec0;
+    font-size: 1rem;
+    margin-right: 10px;
+    width: 24px;
+    text-align: center;
+}
+
+.input-wrapper:focus-within .input-icon {
+    color: #667eea;
+}
+
+.form-control-mobile {
+    border: none;
+    background: transparent;
+    padding: 14px 0;
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+    outline: none;
+    color: #1a202c;
+    font-family: 'Inter', sans-serif;
+}
+
+.form-control-mobile::placeholder {
+    color: #cbd5e0;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+/* Large button for fat-finger friendly */
+.btn-login {
+    background: linear-gradient(105deg, #667eea, #764ba2);
+    border: none;
+    padding: 14px 20px;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 44px;
+    color: white;
+    transition: all 0.2s ease;
+    margin-top: 0.5rem;
+    box-shadow: 0 6px 14px rgba(102, 126, 234, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 52px;
+    width: 100%;
+}
+
+.btn-login:active {
+    transform: scale(0.97);
+    box-shadow: 0 3px 8px rgba(102, 126, 234, 0.4);
+}
+
+/* Message styling - compact */
+#msg {
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    padding: 10px 12px;
+    border-radius: 44px;
+    text-align: center;
+    background: #fff5f5;
+    display: none;
+}
+
+#msg.show {
+    display: block;
+}
+
+/* Footer */
+.extra-footer {
+    text-align: center;
+    margin-top: 1.2rem;
+    font-size: 0.7rem;
+    color: #a0aec0;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.extra-footer i {
+    font-size: 0.7rem;
+}
+
+/* ===== MOBILE SPECIFIC OPTIMIZATIONS ===== */
+/* For very small devices (up to 380px) - make it even more compact */
+@media (max-width: 380px) {
+    body {
+        padding: 8px;
+    }
+    
+    .login-card {
+        padding: 1.2rem 1rem;
+        border-radius: 24px;
+    }
+    
+    .login-title {
+        font-size: 1.4rem;
+    }
+    
+    .brand-icon i {
+        font-size: 2rem;
+    }
+    
+    .form-control-mobile {
+        padding: 12px 0;
+        font-size: 15px;
+    }
+    
+    .input-wrapper {
+        min-height: 48px;
+    }
+    
+    .btn-login {
+        padding: 12px 16px;
+        min-height: 48px;
+        font-size: 0.95rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+}
+
+/* For devices with small height (keyboard open scenario) */
+@media (max-height: 600px) {
+    .login-card {
+        padding: 1rem 1.2rem;
+    }
+    
+    .brand-icon {
+        margin-bottom: 0.3rem;
+    }
+    
+    .login-sub {
+        margin-bottom: 1rem;
+    }
+    
+    .form-group {
+        margin-bottom: 0.9rem;
+    }
+}
+
+/* Prevent zoom on input focus for iOS */
+@media (max-width: 768px) {
+    .form-control-mobile {
+        font-size: 16px !important;
+    }
+}
+
+/* Touch feedback */
+.btn-login, .input-wrapper {
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+/* Loading state */
+.btn-login.loading {
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+.btn-login i.fa-spinner {
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Shake animation for error */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+
+.shake {
+    animation: shake 0.25s ease-in-out;
+}
+
+/* Remember me row - compact */
+.remember-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.75rem 0 0.25rem;
+    font-size: 0.75rem;
+}
+
+.remember-check {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.remember-check input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.remember-check span {
+    color: #4a5568;
+    font-weight: 500;
+}
+
+.forgot-link {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+/* Divider */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1rem 0 0.5rem;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.divider span {
+    padding: 0 10px;
+    color: #a0aec0;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+/* Demo hint (optional) */
+.demo-hint {
+    background: #fef5e7;
+    border-radius: 12px;
+    padding: 8px 12px;
+    margin-top: 0.8rem;
+    font-size: 0.7rem;
+    color: #c05621;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+</style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="login-card">
+        <!-- Logo/Brand - compact for mobile -->
+        <div class="brand-icon">
+            <i class="fas fa-shield-hooded"></i>
+        </div>
+        <h2 class="login-title">Sign in</h2>
+        <div class="login-sub">
+            <i class="fas fa-fingerprint"></i>
+            <span>Admin access portal</span>
+        </div>
+
+        <!-- ID Field - mobile optimized -->
+        <div class="form-group">
+            <div class="form-label">
+                <i class="fas fa-id-badge"></i>
+                <span>User ID</span>
+            </div>
+            <div class="input-wrapper">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" id="id" class="form-control-mobile" 
+                       placeholder="Enter your ID" autocomplete="username"
+                       inputmode="text" autofocus>
+            </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+            <div class="form-label">
+                <i class="fas fa-lock"></i>
+                <span>Password</span>
+            </div>
+            <div class="input-wrapper">
+                <i class="fas fa-key input-icon"></i>
+                <input type="password" id="password" class="form-control-mobile" 
+                       placeholder="Enter password" autocomplete="current-password">
+            </div>
+        </div>
+
+        <!-- Remember me & Forgot (visual only - enhances UX) -->
+        <div class="remember-row">
+            <label class="remember-check">
+                <input type="checkbox" id="rememberMe"> 
+                <span>Remember me</span>
+            </label>
+            <a href="#" class="forgot-link" id="forgotHint" style="pointer-events: none; opacity: 0.7;">Forgot?</a>
+        </div>
+
+        <!-- Login Button -->
+        <button onclick="login()" id="loginBtn" class="btn-login">
+            <i class="fas fa-arrow-right-to-bracket"></i>
+            <span>Login</span>
+        </button>
+
+        <!-- Message Area -->
+        <p id="msg"></p>
+        
+        <!-- Divider (just style) -->
+        <div class="divider">
+            <span>secure connection</span>
+        </div>
+        
+        <!-- Footer -->
+        <div class="extra-footer">
+            <i class="fas fa-database"></i>
+            <span>Supabase • Encrypted</span>
+        </div>
+        
+        <!-- Demo hint - shows that it's mobile friendly (can be removed if needed) -->
+        <div class="demo-hint">
+            <i class="fas fa-mobile-alt"></i>
+            <span>Mobile optimized • Large tap areas</span>
+        </div>
+    </div>
+</div>
+
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+// Supabase configuration
+const supabaseUrl = "https://iydamvrlxtwsnqvflaxq.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml5ZGFtdnJseHR3c25xdmZsYXhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgwOTczMTIsImV4cCI6MjA3MzY3MzMxMn0.Z8m6XGyu9wsN_UJ8EZYr12BRemsO12_U8EEZ9JizQ6w";
+
+// Initialize Supabase client
+const client = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+// DOM elements
+const idInput = document.getElementById("id");
+const passwordInput = document.getElementById("password");
+const msgElement = document.getElementById("msg");
+const loginBtn = document.getElementById("loginBtn");
+const rememberCheck = document.getElementById("rememberMe");
+
+// Show message function with auto-hide
+function showMessage(text, isError = true) {
+    msgElement.innerText = text;
+    msgElement.style.display = "block";
+    if (isError) {
+        msgElement.style.color = "#dc2626";
+        msgElement.style.backgroundColor = "#fee2e2";
+        msgElement.style.borderLeft = "3px solid #dc2626";
+        msgElement.style.borderRadius = "12px";
+    } else {
+        msgElement.style.color = "#0f5b2d";
+        msgElement.style.backgroundColor = "#e6f7e6";
+        msgElement.style.borderLeft = "3px solid #10b981";
+        msgElement.style.borderRadius = "12px";
+    }
+    
+    // Auto hide after 3 seconds for success/errors
+    setTimeout(() => {
+        if (msgElement.innerText === text) {
+            msgElement.style.display = "none";
+        }
+    }, 3000);
+}
+
+// Clear message on typing
+function clearMessage() {
+    if (msgElement.innerText !== "") {
+        msgElement.style.display = "none";
+        msgElement.innerText = "";
+    }
+}
+
+idInput.addEventListener("input", clearMessage);
+passwordInput.addEventListener("input", clearMessage);
+
+// Set loading state for button (mobile feedback)
+function setLoading(isLoading) {
+    if (isLoading) {
+        loginBtn.disabled = true;
+        loginBtn.classList.add("loading");
+        const originalHtml = loginBtn.innerHTML;
+        loginBtn.setAttribute("data-original", originalHtml);
+        loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Verifying...</span>';
+    } else {
+        loginBtn.disabled = false;
+        loginBtn.classList.remove("loading");
+        const original = loginBtn.getAttribute("data-original");
+        if (original) {
+            loginBtn.innerHTML = original;
+        } else {
+            loginBtn.innerHTML = '<i class="fas fa-arrow-right-to-bracket"></i><span>Login</span>';
+        }
+    }
+}
+
+// Shake animation for error feedback
+function shakeField(element) {
+    const wrapper = element.closest('.input-wrapper');
+    if (wrapper) {
+        wrapper.classList.add('shake');
+        setTimeout(() => {
+            wrapper.classList.remove('shake');
+        }, 300);
+    }
+}
+
+// Load saved ID if "Remember me" was checked previously
+function loadSavedCredentials() {
+    const savedId = localStorage.getItem("saved_admin_id");
+    const savedRemember = localStorage.getItem("remember_admin");
+    if (savedRemember === "true" && savedId) {
+        idInput.value = savedId;
+        if (rememberCheck) rememberCheck.checked = true;
+    }
+}
+
+loadSavedCredentials();
+
+// Handle Enter key for mobile keyboard
+function onEnterPress(e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        login();
+    }
+}
+idInput.addEventListener("keypress", onEnterPress);
+passwordInput.addEventListener("keypress", onEnterPress);
+
+// Main login function
+async function login() {
+    // Trim inputs
+    let id = idInput.value.trim();
+    let password = passwordInput.value.trim();
+    
+    // Validation
+    if (id === "") {
+        showMessage("⚠️ Please enter your User ID", true);
+        shakeField(idInput);
+        idInput.focus();
+        return;
+    }
+    
+    if (password === "") {
+        showMessage("🔒 Please enter your password", true);
+        shakeField(passwordInput);
+        passwordInput.focus();
+        return;
+    }
+    
+    // Set loading state
+    setLoading(true);
+    
+    try {
+        // Query Supabase admin table
+        const { data, error } = await client
+            .from('admin')
+            .select('*')
+            .eq('id', id)
+            .eq('password', password);
+        
+        if (error) {
+            console.error("Supabase error:", error);
+            showMessage("🌐 Network error. Please try again.", true);
+            setLoading(false);
+            return;
+        }
+        
+        // Check if credentials match
+        if (data && data.length > 0) {
+            // Success!
+            showMessage("✅ Login successful! Redirecting...", false);
+            
+            // Handle remember me functionality
+            if (rememberCheck && rememberCheck.checked) {
+                localStorage.setItem("saved_admin_id", id);
+                localStorage.setItem("remember_admin", "true");
+            } else {
+                localStorage.removeItem("saved_admin_id");
+                localStorage.removeItem("remember_admin");
+            }
+            
+            // Store session info
+           localStorage.setItem("username", data[0].username);
+        localStorage.setItem("user_id", id);
+            // Short delay for message visibility and smooth redirect
+            setTimeout(() => {
+                window.location.href = "dashboard.html";
+            }, 600);
+        } else {
+            // Invalid credentials
+            showMessage("❌ Invalid ID or Password", true);
+            setLoading(false);
+            passwordInput.value = ""; // Clear password field for security
+            passwordInput.focus();
+            shakeField(passwordInput);
+        }
+        
+    } catch (err) {
+        console.error("Login error:", err);
+        showMessage("⚠️ Connection failed. Check internet & try again.", true);
+        setLoading(false);
+    }
+}
+
+// Optional: Disable double-tap zoom on buttons for better mobile experience
+document.querySelectorAll('.btn-login, .input-wrapper').forEach(el => {
+    el.addEventListener('touchstart', (e) => {
+        // Just to improve responsiveness, no preventDefault needed
+    }, { passive: true });
+});
+
+// Handle mobile keyboard issues: scroll into view when input focused
+const inputs = document.querySelectorAll('input');
+inputs.forEach(input => {
+    input.addEventListener('focus', (e) => {
+        setTimeout(() => {
+            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+    });
+});
+
+// Small enhancement: clear error if user starts typing after error
+function resetErrorOnTyping() {
+    if (msgElement.style.display === 'block') {
+        msgElement.style.display = 'none';
+    }
+}
+idInput.addEventListener('input', resetErrorOnTyping);
+passwordInput.addEventListener('input', resetErrorOnTyping);
+
+// Remember me checkbox styling - save visual state
+// Prevents accidental form submit on mobile
+document.querySelectorAll('.remember-check, .forgot-link').forEach(el => {
+    el.addEventListener('click', (e) => {
+        if (el.classList.contains('forgot-link')) {
+            e.preventDefault();
+            showMessage("📧 Contact admin to reset password", false);
+        }
+    });
+});
+
+// Add viewport adjustment for when keyboard opens (better UX)
+if ('visualViewport' in window) {
+    let originalScrollY = 0;
+    window.visualViewport.addEventListener('resize', () => {
+        const viewport = window.visualViewport;
+        const keyboardOpen = viewport.height < window.innerHeight - 100;
+        if (keyboardOpen) {
+            // When keyboard opens, ensure active element is visible
+            const activeEl = document.activeElement;
+            if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) {
+                setTimeout(() => {
+                    activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    });
+}
+
+// Small tweak: Ensure the button doesn't stay disabled if redirect fails
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        setLoading(false);
+    }
+});
+
+// For demo - console log to show it's mobile ready
+console.log("Mobile optimized login ready • Large tap targets • Compact design");
+</script>
+
+</body>
+</html>

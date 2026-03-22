@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>Expense Manager | Smart Finance</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 12px;
+}
+
+.container-custom {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.header-bar {
+    background: white;
+    border-radius: 20px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: #667eea;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 40px;
+    cursor: pointer;
+}
+
+.user-badge {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 6px 14px;
+    border-radius: 40px;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.current-balance {
+    background: white;
+    border-radius: 20px;
+    padding: 15px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.balance-item {
+    text-align: center;
+    flex: 1;
+}
+
+.balance-label {
+    font-size: 0.7rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.balance-value {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-top: 5px;
+}
+
+.cash-color {
+    color: #28a745;
+}
+
+.upi-color {
+    color: #6f42c1;
+}
+
+.form-card {
+    background: white;
+    border-radius: 24px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-title i {
+    color: #dc3545;
+}
+
+.input-group-custom {
+    margin-bottom: 12px;
+}
+
+.input-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-control-custom, .form-select-custom {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.form-control-custom:focus, .form-select-custom:focus {
+    border-color: #dc3545;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(220,53,69,0.1);
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #dc3545, #fd7e14);
+    border: none;
+    padding: 12px;
+    border-radius: 40px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    width: 100%;
+    color: white;
+    margin-top: 5px;
+    transition: transform 0.1s;
+}
+
+.btn-save:active {
+    transform: scale(0.98);
+}
+
+.table-card {
+    background: white;
+    border-radius: 24px;
+    padding: 12px;
+    margin-bottom: 20px;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #eef2f6;
+}
+
+.table-header h6 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.record-badge {
+    background: #dc3545;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.65rem;
+}
+
+.table-responsive-custom {
+    overflow-x: auto;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.expense-table {
+    width: 100%;
+    font-size: 0.7rem;
+    border-collapse: collapse;
+}
+
+.expense-table th {
+    background: #f8fafc;
+    padding: 10px 6px;
+    font-weight: 700;
+    color: #475569;
+    position: sticky;
+    top: 0;
+}
+
+.expense-table td {
+    padding: 10px 6px;
+    border-bottom: 1px solid #eef2f6;
+}
+
+.btn-action {
+    padding: 5px 8px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    margin: 0 2px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-edit {
+    background: #ffc107;
+    color: #000;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+}
+
+.toast-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    z-index: 1001;
+    animation: fadeInUp 0.3s ease;
+    white-space: nowrap;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.modal-custom {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 28px;
+    max-width: 320px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 40px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #94a3b8;
+}
+
+.empty-state i {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    opacity: 0.5;
+}
+
+.warning-text {
+    color: #dc3545;
+    font-size: 0.65rem;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+</style>
+</head>
+<body>
+
+<div class="container-custom">
+    
+    <div class="header-bar">
+        <button onclick="goBack()" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <div class="user-badge">
+            <i class="fas fa-user"></i> <span id="userName">Loading...</span>
+        </div>
+    </div>
+    
+    <div class="current-balance">
+        <div class="balance-item">
+            <div class="balance-label">💵 Cash Balance</div>
+            <div class="balance-value cash-color" id="cashBalance">₹0</div>
+        </div>
+        <div class="balance-item">
+            <div class="balance-label">📱 UPI Balance</div>
+            <div class="balance-value upi-color" id="upiBalance">₹0</div>
+        </div>
+    </div>
+    
+    <div class="form-card">
+        <div class="form-title">
+            <i class="fas fa-arrow-up"></i>
+            <span id="formTitle">Add Expense</span>
+        </div>
+        <input type="hidden" id="edit_id">
+        
+        <div class="input-group-custom">
+            <div class="input-label">
+                <i class="fas fa-calendar"></i> Date
+            </div>
+            <input type="date" id="expense_date" class="form-control-custom">
+        </div>
+        
+        <div class="input-group-custom">
+            <div class="input-label">
+                <i class="fas fa-rupee-sign"></i> Amount (₹)
+            </div>
+            <input type="number" id="amount" class="form-control-custom" placeholder="Enter expense amount">
+        </div>
+        
+        <div class="input-group-custom">
+            <div class="input-label">
+                <i class="fas fa-tag"></i> Category
+            </div>
+            <select id="category" class="form-select-custom">
+                <option value="Food & Dining">🍔 Food & Dining</option>
+                <option value="Transport">🚗 Transport</option>
+                <option value="Shopping">🛍️ Shopping</option>
+                <option value="Bills & Utilities">💡 Bills & Utilities</option>
+                <option value="Entertainment">🎬 Entertainment</option>
+                <option value="Healthcare">🏥 Healthcare</option>
+                <option value="Education">📚 Education</option>
+                <option value="Other">📌 Other</option>
+            </select>
+        </div>
+        
+        <div class="input-group-custom">
+            <div class="input-label">
+                <i class="fas fa-wallet"></i> Payment Mode
+            </div>
+            <select id="mode" class="form-select-custom">
+                <option value="cash">💵 Cash → Cash Balance -</option>
+                <option value="upi">📱 UPI → UPI Balance -</option>
+            </select>
+        </div>
+        
+        <div class="input-group-custom">
+            <div class="input-label">
+                <i class="fas fa-comment"></i> Description (Optional)
+            </div>
+            <input type="text" id="description" class="form-control-custom" placeholder="e.g., Groceries, Movie, etc">
+        </div>
+        
+        <button onclick="saveExpense()" class="btn-save">
+            <i class="fas fa-save"></i> Save Expense
+        </button>
+    </div>
+    
+    <div class="table-card">
+        <div class="table-header">
+            <h6><i class="fas fa-history"></i> Recent Expenses (Last 8)</h6>
+            <span class="record-badge" id="recordCount">0</span>
+        </div>
+        <div class="table-responsive-custom">
+            <table class="expense-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Mode</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tableData"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="deleteModal" class="modal-custom">
+    <div class="modal-content">
+        <i class="fas fa-trash-alt" style="font-size: 2rem; color: #dc3545;"></i>
+        <h5 style="margin: 10px 0;">Delete Expense?</h5>
+        <p style="color: #64748b; font-size: 0.75rem;">Amount will be added back to your balance</p>
+        <div class="modal-buttons">
+            <button onclick="closeModal()" style="background:#e2e8f0;">Cancel</button>
+            <button onclick="confirmDelete()" style="background:#dc3545; color:white;">Delete</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const supabaseUrl = "https://iydamvrlxtwsnqvflaxq.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml5ZGFtdnJseHR3c25xdmZsYXhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgwOTczMTIsImV4cCI6MjA3MzY3MzMxMn0.Z8m6XGyu9wsN_UJ8EZYr12BRemsO12_U8EEZ9JizQ6w";
+
+const client = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+let deleteId = null;
+
+// Get user
+function getUser() {
+    let user = localStorage.getItem("username") || localStorage.getItem("username");
+    if(!user) {
+        window.location.href = "index.html";
+    }
+    document.getElementById("userName").innerText = user;
+}
+getUser();
+
+// Set today's date
+function setTodayDate() {
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = String(today.getMonth() + 1).padStart(2, '0');
+    let day = String(today.getDate()).padStart(2, '0');
+    document.getElementById("expense_date").value = `${year}-${month}-${day}`;
+}
+setTodayDate();
+
+// Format date
+function formatDate(dateStr) {
+    if(!dateStr) return '-';
+    let d = new Date(dateStr);
+    return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+}
+
+// Load Current Balance
+async function loadBalance() {
+    try {
+        const { data, error } = await client
+            .from('account')
+            .select('cash, upi')
+            .eq('id', 1)
+            .single();
+        
+        if(error) throw error;
+        
+        if(data) {
+            document.getElementById("cashBalance").innerHTML = `₹${Number(data.cash || 0).toLocaleString('en-IN')}`;
+            document.getElementById("upiBalance").innerHTML = `₹${Number(data.upi || 0).toLocaleString('en-IN')}`;
+        }
+    } catch(error) {
+        console.error("Balance load error:", error);
+    }
+}
+
+// Update Account Balance
+async function updateAccount(mode, amount, operation) {
+    try {
+        if(operation === 'subtract') {
+            if(mode === 'cash') {
+                const { error } = await client.rpc('decrease_cash', { amt: amount });
+                if(error) throw error;
+            } else {
+                const { error } = await client.rpc('decrease_upi', { amt: amount });
+                if(error) throw error;
+            }
+        } else if(operation === 'add') {
+            if(mode === 'cash') {
+                const { error } = await client.rpc('increase_cash', { amt: amount });
+                if(error) throw error;
+            } else {
+                const { error } = await client.rpc('increase_upi', { amt: amount });
+                if(error) throw error;
+            }
+        }
+        await loadBalance();
+        return true;
+    } catch(error) {
+        console.error("Account update error:", error);
+        return false;
+    }
+}
+
+// Load Expense Data
+async function loadExpenses() {
+    try {
+        const { data, error } = await client
+            .from('expense')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(8);
+        
+        if(error) throw error;
+        
+        let tbody = document.getElementById("tableData");
+        let recordCount = document.getElementById("recordCount");
+        
+        if(!data || data.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-inbox"></i><p>No expense records</p></td></tr>`;
+            recordCount.innerText = "0";
+            return;
+        }
+        
+        recordCount.innerText = data.length;
+        
+        let html = "";
+        data.forEach(row => {
+            const modeIcon = row.mode === 'cash' ? '💵' : '📱';
+            const modeText = row.mode === 'cash' ? 'Cash' : 'UPI';
+            
+            html += `
+                <tr>
+                    <td>${formatDate(row.created_at)}</td>
+                    <td><strong style="color: #dc3545;">-₹${Number(row.amount).toLocaleString('en-IN')}</strong></td>
+                    <td>${row.category || '-'}</td>
+                    <td>${modeIcon} ${modeText}</td>
+                    <td>
+                        <button class="btn-action btn-edit" onclick="editExpense('${row.id}', ${row.amount}, '${row.category}', '${row.mode}', '${row.description || ''}', '${row.created_at}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-action btn-delete" onclick="openDeleteModal('${row.id}', ${row.amount}, '${row.mode}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        tbody.innerHTML = html;
+        
+    } catch(error) {
+        console.error("Load error:", error);
+        showToast("Failed to load data", "error");
+    }
+}
+
+// 🔥 FIXED: Save Expense with proper balance check for edit
+async function saveExpense() {
+    let id = document.getElementById("edit_id").value;
+    let amount = parseFloat(document.getElementById("amount").value);
+    let category = document.getElementById("category").value;
+    let mode = document.getElementById("mode").value;
+    let description = document.getElementById("description").value.trim();
+    let expenseDate = document.getElementById("expense_date").value;
+    
+    if(!amount || amount <= 0) {
+        showToast("Enter valid amount", "error");
+        return;
+    }
+    
+    try {
+        if(id) {
+            // EDIT MODE - Get old data first
+            const { data: oldData, error: fetchError } = await client
+                .from('expense')
+                .select('*')
+                .eq('id', id)
+                .single();
+            
+            if(fetchError) throw fetchError;
+            
+            // Calculate balance change for editing
+            // If same mode: (new_amount - old_amount) is the net change
+            // If different mode: remove old from old mode, add new to new mode
+            
+            if(oldData.mode === mode) {
+                // Same mode - check if we have enough balance for the difference
+                const balanceDiff = amount - oldData.amount;
+                
+                if(balanceDiff > 0) {
+                    // New expense is more than old - need extra balance
+                    const currentBalance = mode === 'cash' ? 
+                        parseFloat(document.getElementById("cashBalance").innerText.replace('₹', '').replace(/,/g, '')) : 
+                        parseFloat(document.getElementById("upiBalance").innerText.replace('₹', '').replace(/,/g, ''));
+                    
+                    if(currentBalance < balanceDiff) {
+                        showToast(`Insufficient balance! Need ₹${balanceDiff} more`, "error");
+                        return;
+                    }
+                }
+                
+                // Update balance with the difference
+                if(balanceDiff !== 0) {
+                    if(balanceDiff > 0) {
+                        // Need to subtract more
+                        await updateAccount(mode, balanceDiff, 'subtract');
+                    } else {
+                        // Need to add back (negative diff)
+                        await updateAccount(mode, Math.abs(balanceDiff), 'add');
+                    }
+                }
+            } else {
+                // Different mode - remove old from old mode, add new to new mode
+                // Check if new mode has enough balance for new amount
+                const newModeBalance = mode === 'cash' ? 
+                    parseFloat(document.getElementById("cashBalance").innerText.replace('₹', '').replace(/,/g, '')) : 
+                    parseFloat(document.getElementById("upiBalance").innerText.replace('₹', '').replace(/,/g, ''));
+                
+                // Add old amount back to old mode balance
+                const oldModeBalanceAfterAdd = oldData.mode === 'cash' ? 
+                    parseFloat(document.getElementById("cashBalance").innerText.replace('₹', '').replace(/,/g, '')) + oldData.amount :
+                    parseFloat(document.getElementById("upiBalance").innerText.replace('₹', '').replace(/,/g, '')) + oldData.amount;
+                
+                if(newModeBalance < amount) {
+                    showToast(`Insufficient balance in ${mode.toUpperCase()}! Available: ₹${newModeBalance}`, "error");
+                    return;
+                }
+                
+                // Reverse old expense (add back to old mode)
+                await updateAccount(oldData.mode, oldData.amount, 'add');
+                // Subtract new expense from new mode
+                await updateAccount(mode, amount, 'subtract');
+            }
+            
+            // Update expense record
+            const utcDate = new Date(expenseDate + 'T00:00:00');
+            const { error: updateError } = await client
+                .from('expense')
+                .update({
+                    amount: amount,
+                    category: category,
+                    mode: mode,
+                    description: description,
+                    created_at: utcDate.toISOString()
+                })
+                .eq('id', id);
+            
+            if(updateError) throw updateError;
+            
+            showToast(`✅ Expense updated!`, "success");
+            document.getElementById("formTitle").innerHTML = '<i class="fas fa-arrow-up"></i> Add Expense';
+            
+        } else {
+            // INSERT MODE - Check balance first
+            const currentBalance = mode === 'cash' ? 
+                parseFloat(document.getElementById("cashBalance").innerText.replace('₹', '').replace(/,/g, '')) : 
+                parseFloat(document.getElementById("upiBalance").innerText.replace('₹', '').replace(/,/g, ''));
+            
+            if(currentBalance < amount) {
+                showToast(`Insufficient ${mode.toUpperCase()} balance! Available: ₹${currentBalance}`, "error");
+                return;
+            }
+            
+            const utcDate = new Date(expenseDate + 'T00:00:00');
+            const { error: insertError } = await client
+                .from('expense')
+                .insert([{
+                    amount: amount,
+                    category: category,
+                    mode: mode,
+                    description: description,
+                    created_at: utcDate.toISOString()
+                }]);
+            
+            if(insertError) throw insertError;
+            
+            // Subtract from account
+            await updateAccount(mode, amount, 'subtract');
+            
+            showToast(`✅ Expense added! ${mode.toUpperCase()} -₹${amount}`, "success");
+        }
+        
+        // Clear form
+        document.getElementById("edit_id").value = "";
+        document.getElementById("amount").value = "";
+        document.getElementById("category").value = "Food & Dining";
+        document.getElementById("mode").value = "cash";
+        document.getElementById("description").value = "";
+        setTodayDate();
+        
+        await loadExpenses();
+        
+    } catch(error) {
+        console.error("Save error:", error);
+        showToast("Failed: " + error.message, "error");
+    }
+}
+
+// Edit Expense
+function editExpense(id, amount, category, mode, description, createdAt) {
+    document.getElementById("edit_id").value = id;
+    document.getElementById("amount").value = amount;
+    document.getElementById("category").value = category;
+    document.getElementById("mode").value = mode;
+    document.getElementById("description").value = description || "";
+    document.getElementById("formTitle").innerHTML = '<i class="fas fa-edit"></i> Edit Expense';
+    
+    if(createdAt) {
+        let d = new Date(createdAt);
+        let year = d.getFullYear();
+        let month = String(d.getMonth() + 1).padStart(2, '0');
+        let day = String(d.getDate()).padStart(2, '0');
+        document.getElementById("expense_date").value = `${year}-${month}-${day}`;
+    }
+    
+    document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Delete Modal
+function openDeleteModal(id, amount, mode) {
+    deleteId = { id, amount, mode };
+    document.getElementById("deleteModal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("deleteModal").style.display = "none";
+    deleteId = null;
+}
+
+async function confirmDelete() {
+    if(!deleteId) return;
+    
+    try {
+        // Add back to account
+        await updateAccount(deleteId.mode, deleteId.amount, 'add');
+        
+        // Delete from expense table
+        const { error } = await client
+            .from('expense')
+            .delete()
+            .eq('id', deleteId.id);
+        
+        if(error) throw error;
+        
+        showToast(`✅ Expense deleted! ₹${deleteId.amount} added back`, "success");
+        closeModal();
+        await loadExpenses();
+        
+        if(document.getElementById("edit_id").value == deleteId.id) {
+            document.getElementById("edit_id").value = "";
+            document.getElementById("amount").value = "";
+            document.getElementById("category").value = "Food & Dining";
+            document.getElementById("mode").value = "cash";
+            document.getElementById("description").value = "";
+            setTodayDate();
+            document.getElementById("formTitle").innerHTML = '<i class="fas fa-arrow-up"></i> Add Expense';
+        }
+        
+    } catch(error) {
+        console.error("Delete error:", error);
+        showToast("Delete failed", "error");
+        closeModal();
+    }
+}
+
+// Toast
+function showToast(msg, type = "success") {
+    let toast = document.createElement("div");
+    toast.className = "toast-message";
+    toast.style.background = type === "success" ? "#28a745" : "#dc3545";
+    toast.innerHTML = `<i class="fas fa-${type === "success" ? "check-circle" : "exclamation-circle"}"></i> ${msg}`;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2500);
+}
+
+// Go back
+function goBack() {
+    window.location.href = "dashboard.html";
+}
+
+// Close modal on outside click
+window.onclick = function(e) {
+    let modal = document.getElementById("deleteModal");
+    if(e.target === modal) closeModal();
+}
+
+// Initialize
+loadBalance();
+loadExpenses();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>Salary Manager | Smart Finance</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 12px;
+}
+
+.container-custom {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.header-bar {
+    background: white;
+    border-radius: 20px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: #667eea;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 40px;
+    cursor: pointer;
+}
+
+.user-badge {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 6px 14px;
+    border-radius: 40px;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Summary Cards */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.summary-card {
+    background: white;
+    border-radius: 16px;
+    padding: 10px 5px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.summary-label {
+    font-size: 0.6rem;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.summary-value {
+    font-size: 1rem;
+    font-weight: 800;
+    margin-top: 4px;
+}
+
+.gross-color { color: #28a745; }
+.net-color { color: #007bff; }
+.pf-color { color: #fd7e14; }
+.extra-color { color: #6f42c1; }
+
+.form-card {
+    background: white;
+    border-radius: 24px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-title i {
+    color: #007bff;
+}
+
+.input-group-custom {
+    margin-bottom: 12px;
+}
+
+.input-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-control-custom {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.form-control-custom:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+}
+
+.readonly-field {
+    background: #f8fafc;
+    color: #1e293b;
+    font-weight: 600;
+    border-color: #e2e8f0;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #007bff, #00b4db);
+    border: none;
+    padding: 12px;
+    border-radius: 40px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    width: 100%;
+    color: white;
+    margin-top: 5px;
+    transition: transform 0.1s;
+}
+
+.btn-save:active {
+    transform: scale(0.98);
+}
+
+.table-card {
+    background: white;
+    border-radius: 24px;
+    padding: 12px;
+    margin-bottom: 20px;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #eef2f6;
+}
+
+.table-header h6 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.record-badge {
+    background: #007bff;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.65rem;
+}
+
+.table-responsive-custom {
+    overflow-x: auto;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.salary-table {
+    width: 100%;
+    font-size: 0.7rem;
+    border-collapse: collapse;
+}
+
+.salary-table th {
+    background: #f8fafc;
+    padding: 10px 6px;
+    font-weight: 700;
+    color: #475569;
+    position: sticky;
+    top: 0;
+}
+
+.salary-table td {
+    padding: 10px 6px;
+    border-bottom: 1px solid #eef2f6;
+}
+
+.btn-action {
+    padding: 5px 8px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    margin: 0 2px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-edit {
+    background: #ffc107;
+    color: #000;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+}
+
+.toast-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    z-index: 1001;
+    animation: fadeInUp 0.3s ease;
+    white-space: nowrap;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.modal-custom {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 28px;
+    max-width: 320px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 40px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #94a3b8;
+}
+
+.empty-state i {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    opacity: 0.5;
+}
+
+.calc-hint {
+    font-size: 0.65rem;
+    color: #64748b;
+    margin-top: 8px;
+    text-align: center;
+    padding: 6px;
+    background: #f1f5f9;
+    border-radius: 12px;
+}
+
+@media (max-width: 480px) {
+    .summary-value {
+        font-size: 0.85rem;
+    }
+    .salary-table th, .salary-table td {
+        padding: 8px 4px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container-custom">
+    
+    <div class="header-bar">
+        <button onclick="goBack()" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <div class="user-badge">
+            <i class="fas fa-user"></i> <span id="userName">Loading...</span>
+        </div>
+    </div>
+    
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+        <div class="summary-card">
+            <div class="summary-label">Total Gross</div>
+            <div class="summary-value gross-color" id="totalGross">₹0</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-label">Total PF</div>
+            <div class="summary-value pf-color" id="totalPF">₹0</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-label">Total Net</div>
+            <div class="summary-value net-color" id="totalNet">₹0</div>
+        </div>
+    </div>
+    
+    <div class="form-card">
+        <div class="form-title">
+            <i class="fas fa-money-bill-wave"></i>
+            <span id="formTitle">Add Salary Record</span>
+        </div>
+        <input type="hidden" id="edit_id">
+        
+        <div class="input-group-custom">
+            <div class="input-label">
+                <i class="fas fa-calendar"></i> Date
+            </div>
+            <input type="date" id="salary_date" class="form-control-custom">
+        </div>
+        
+        <div class="input-group-custom">
+            <div class="input-label">
+                <i class="fas fa-rupee-sign"></i> Gross Salary (₹)
+            </div>
+            <input type="number" id="gross" class="form-control-custom" placeholder="Enter gross salary" oninput="calculateExtra()">
+        </div>
+        
+        <div class="input-group-custom">
+            <div class="input-label">
+                <i class="fas fa-chart-line"></i> PF / Deduction (₹)
+            </div>
+            <input type="number" id="pf" class="form-control-custom" placeholder="Enter PF amount" oninput="calculateExtra()">
+        </div>
+        
+        <div class="input-group-custom">
+            <div class="input-label">
+                <i class="fas fa-wallet"></i> Net Salary (₹)
+            </div>
+            <input type="number" id="net" class="form-control-custom" placeholder="Enter net salary" oninput="calculateExtra()">
+        </div>
+        
+        <div class="input-group-custom">
+            <div class="input-label">
+                <i class="fas fa-coins"></i> Extra (₹) <span style="font-size: 0.6rem;">(Gross - Net - PF)</span>
+            </div>
+            <input type="number" id="extra" class="form-control-custom readonly-field" readonly placeholder="Auto calculated">
+        </div>
+        
+        <div class="calc-hint">
+            <i class="fas fa-calculator"></i> Extra = Gross - Net - PF (Auto Calculated)
+        </div>
+        
+        <button onclick="saveSalary()" class="btn-save">
+            <i class="fas fa-save"></i> Save Salary
+        </button>
+    </div>
+    
+    <div class="table-card">
+        <div class="table-header">
+            <h6><i class="fas fa-history"></i> Salary Records (Last 5)</h6>
+            <span class="record-badge" id="recordCount">0</span>
+        </div>
+        <div class="table-responsive-custom">
+            <table class="salary-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Gross</th>
+                        <th>PF</th>
+                        <th>Net</th>
+                        <th>Extra</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tableData"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="deleteModal" class="modal-custom">
+    <div class="modal-content">
+        <i class="fas fa-trash-alt" style="font-size: 2rem; color: #dc3545;"></i>
+        <h5 style="margin: 10px 0;">Delete Salary Record?</h5>
+        <p style="color: #64748b; font-size: 0.75rem;">This action cannot be undone</p>
+        <div class="modal-buttons">
+            <button onclick="closeModal()" style="background:#e2e8f0;">Cancel</button>
+            <button onclick="confirmDelete()" style="background:#dc3545; color:white;">Delete</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const supabaseUrl = "https://iydamvrlxtwsnqvflaxq.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml5ZGFtdnJseHR3c25xdmZsYXhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgwOTczMTIsImV4cCI6MjA3MzY3MzMxMn0.Z8m6XGyu9wsN_UJ8EZYr12BRemsO12_U8EEZ9JizQ6w";
+
+const client = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+let deleteId = null;
+
+// Get user
+function getUser() {
+    let user = localStorage.getItem("username") || localStorage.getItem("username");
+    if(!user) {
+        window.location.href = "index.html";
+    }
+    document.getElementById("userName").innerText = user;
+}
+getUser();
+
+// Set today's date
+function setTodayDate() {
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = String(today.getMonth() + 1).padStart(2, '0');
+    let day = String(today.getDate()).padStart(2, '0');
+    document.getElementById("salary_date").value = `${year}-${month}-${day}`;
+}
+setTodayDate();
+
+// Calculate Extra = Gross - Net - PF
+function calculateExtra() {
+    let gross = parseFloat(document.getElementById("gross").value) || 0;
+    let pf = parseFloat(document.getElementById("pf").value) || 0;
+    let net = parseFloat(document.getElementById("net").value) || 0;
+    
+    let extra = gross - net - pf;
+    
+    document.getElementById("extra").value = extra.toFixed(2);
+}
+
+// Format date
+function formatDate(dateStr) {
+    if(!dateStr) return '-';
+    let d = new Date(dateStr);
+    return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+}
+
+// Load Salary Data (Last 5 records)
+async function loadSalaries() {
+    try {
+        const { data, error } = await client
+            .from('salary')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(5);
+        
+        if(error) throw error;
+        
+        let tbody = document.getElementById("tableData");
+        let recordCount = document.getElementById("recordCount");
+        
+        if(!data || data.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" class="empty-state"><i class="fas fa-inbox"></i><p>No salary records</p></td></tr>`;
+            recordCount.innerText = "0";
+            document.getElementById("totalGross").innerHTML = "₹0";
+            document.getElementById("totalPF").innerHTML = "₹0";
+            document.getElementById("totalNet").innerHTML = "₹0";
+            return;
+        }
+        
+        recordCount.innerText = data.length;
+        
+        let totalGross = 0;
+        let totalPF = 0;
+        let totalNet = 0;
+        
+        let html = "";
+        data.forEach(row => {
+            totalGross += parseFloat(row.gross) || 0;
+            totalPF += parseFloat(row.pf) || 0;
+            totalNet += parseFloat(row.net) || 0;
+            
+            html += `
+                <tr>
+                    <td>${formatDate(row.created_at)}</td>
+                    <td><strong>₹${Number(row.gross).toLocaleString('en-IN')}</strong></td>
+                    <td>₹${Number(row.pf).toLocaleString('en-IN')}</td>
+                    <td style="color: #28a745;">₹${Number(row.net).toLocaleString('en-IN')}</td>
+                    <td style="color: #6f42c1;">₹${Number(row.extra).toLocaleString('en-IN')}</td>
+                    <td>
+                        <button class="btn-action btn-edit" onclick="editSalary('${row.id}', ${row.gross}, ${row.pf}, ${row.net}, '${row.created_at}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-action btn-delete" onclick="openDeleteModal('${row.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        document.getElementById("totalGross").innerHTML = `₹${totalGross.toLocaleString('en-IN')}`;
+        document.getElementById("totalPF").innerHTML = `₹${totalPF.toLocaleString('en-IN')}`;
+        document.getElementById("totalNet").innerHTML = `₹${totalNet.toLocaleString('en-IN')}`;
+        
+        tbody.innerHTML = html;
+        
+    } catch(error) {
+        console.error("Load error:", error);
+        showToast("Failed to load data", "error");
+    }
+}
+
+// Save Salary
+async function saveSalary() {
+    let id = document.getElementById("edit_id").value;
+    let gross = parseFloat(document.getElementById("gross").value);
+    let pf = parseFloat(document.getElementById("pf").value);
+    let net = parseFloat(document.getElementById("net").value);
+    let extra = parseFloat(document.getElementById("extra").value);
+    let salaryDate = document.getElementById("salary_date").value;
+    
+    // Validation
+    if(!gross || gross <= 0) {
+        showToast("Enter valid gross salary", "error");
+        return;
+    }
+    
+    if(pf < 0) {
+        showToast("PF cannot be negative", "error");
+        return;
+    }
+    
+    if(!net || net <= 0) {
+        showToast("Enter valid net salary", "error");
+        return;
+    }
+    
+    if(net > gross) {
+        showToast("Net salary cannot be greater than gross salary", "error");
+        return;
+    }
+    
+    if(extra < 0) {
+        showToast("Invalid calculation! Extra cannot be negative", "error");
+        return;
+    }
+    
+    try {
+        const utcDate = new Date(salaryDate + 'T00:00:00');
+        
+        if(id) {
+            // UPDATE
+            const { error: updateError } = await client
+                .from('salary')
+                .update({
+                    gross: gross,
+                    pf: pf,
+                    net: net,
+                    extra: extra,
+                    created_at: utcDate.toISOString()
+                })
+                .eq('id', id);
+            
+            if(updateError) throw updateError;
+            
+            showToast(`✅ Salary updated!`, "success");
+            document.getElementById("formTitle").innerHTML = '<i class="fas fa-money-bill-wave"></i> Add Salary Record';
+            
+        } else {
+            // INSERT
+            const { error: insertError } = await client
+                .from('salary')
+                .insert([{
+                    gross: gross,
+                    pf: pf,
+                    net: net,
+                    extra: extra,
+                    created_at: utcDate.toISOString()
+                }]);
+            
+            if(insertError) throw insertError;
+            
+            showToast(`✅ Salary added! Gross: ₹${gross}`, "success");
+        }
+        
+        // Clear form
+        document.getElementById("edit_id").value = "";
+        document.getElementById("gross").value = "";
+        document.getElementById("pf").value = "";
+        document.getElementById("net").value = "";
+        document.getElementById("extra").value = "";
+        setTodayDate();
+        
+        await loadSalaries();
+        
+    } catch(error) {
+        console.error("Save error:", error);
+        showToast("Failed: " + error.message, "error");
+    }
+}
+
+// Edit Salary
+function editSalary(id, gross, pf, net, createdAt) {
+    document.getElementById("edit_id").value = id;
+    document.getElementById("gross").value = gross;
+    document.getElementById("pf").value = pf;
+    document.getElementById("net").value = net;
+    
+    // Calculate extra
+    let extra = gross - net - pf;
+    document.getElementById("extra").value = extra.toFixed(2);
+    
+    document.getElementById("formTitle").innerHTML = '<i class="fas fa-edit"></i> Edit Salary Record';
+    
+    if(createdAt) {
+        let d = new Date(createdAt);
+        let year = d.getFullYear();
+        let month = String(d.getMonth() + 1).padStart(2, '0');
+        let day = String(d.getDate()).padStart(2, '0');
+        document.getElementById("salary_date").value = `${year}-${month}-${day}`;
+    }
+    
+    document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Delete Modal
+function openDeleteModal(id) {
+    deleteId = id;
+    document.getElementById("deleteModal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("deleteModal").style.display = "none";
+    deleteId = null;
+}
+
+async function confirmDelete() {
+    if(!deleteId) return;
+    
+    try {
+        const { error } = await client
+            .from('salary')
+            .delete()
+            .eq('id', deleteId);
+        
+        if(error) throw error;
+        
+        showToast(`✅ Salary record deleted!`, "success");
+        closeModal();
+        await loadSalaries();
+        
+        if(document.getElementById("edit_id").value == deleteId) {
+            document.getElementById("edit_id").value = "";
+            document.getElementById("gross").value = "";
+            document.getElementById("pf").value = "";
+            document.getElementById("net").value = "";
+            document.getElementById("extra").value = "";
+            setTodayDate();
+            document.getElementById("formTitle").innerHTML = '<i class="fas fa-money-bill-wave"></i> Add Salary Record';
+        }
+        
+    } catch(error) {
+        console.error("Delete error:", error);
+        showToast("Delete failed", "error");
+        closeModal();
+    }
+}
+
+// Toast
+function showToast(msg, type = "success") {
+    let toast = document.createElement("div");
+    toast.className = "toast-message";
+    toast.style.background = type === "success" ? "#28a745" : "#dc3545";
+    toast.innerHTML = `<i class="fas fa-${type === "success" ? "check-circle" : "exclamation-circle"}"></i> ${msg}`;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2500);
+}
+
+// Go back
+function goBack() {
+    window.location.href = "dashboard.html";
+}
+
+// Close modal on outside click
+window.onclick = function(e) {
+    let modal = document.getElementById("deleteModal");
+    if(e.target === modal) closeModal();
+}
+
+// Initialize
+loadSalaries();
+</script>
+
+</body>
+</html>
