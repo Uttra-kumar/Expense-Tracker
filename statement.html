@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+<title>Statement | Smart Finance</title>
+
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome 6 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<!-- html2pdf for PDF export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 12px;
+}
+
+.container-custom {
+    max-width: 95%;
+    margin: 0 auto;
+}
+
+/* Header */
+.header-bar {
+    background: white;
+    border-radius: 24px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: #667eea;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 40px;
+    cursor: pointer;
+}
+
+.user-badge {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 6px 14px;
+    border-radius: 40px;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Filter Card */
+.filter-card {
+    background: white;
+    border-radius: 24px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.filter-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.date-range {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.date-input {
+    flex: 1;
+}
+
+.date-label {
+    font-size: 0.65rem;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.date-field {
+    width: 100%;
+    padding: 10px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+
+.filter-type {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.filter-btn {
+    flex: 1;
+    padding: 10px;
+    border: 1.5px solid #e2e8f0;
+    background: white;
+    border-radius: 40px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-color: transparent;
+}
+
+.filter-btn.income-active {
+    background: #28a745;
+    color: white;
+    border-color: transparent;
+}
+
+.filter-btn.expense-active {
+    background: #dc3545;
+    color: white;
+    border-color: transparent;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.btn-filter {
+    flex: 1;
+    padding: 10px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.btn-reset {
+    flex: 1;
+    padding: 10px;
+    background: #e2e8f0;
+    color: #475569;
+    border: none;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+/* Export Buttons */
+.export-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.btn-export {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.7rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-pdf {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-print {
+    background: #6f42c1;
+    color: white;
+}
+
+.btn-csv {
+    background: #28a745;
+    color: white;
+}
+
+/* Summary Cards */
+.summary-cards {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.summary-card {
+    background: white;
+    flex: 1;
+    border-radius: 20px;
+    padding: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.summary-label {
+    font-size: 0.6rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.summary-value {
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-top: 5px;
+}
+
+.income-summary { color: #28a745; }
+.expense-summary { color: #dc3545; }
+.balance-summary { color: #667eea; }
+
+/* Statement Table */
+.statement-card {
+    background: white;
+    border-radius: 24px;
+    padding: 12px;
+    margin-bottom: 20px;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #eef2f6;
+}
+
+.table-header h6 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.record-count {
+    background: #667eea;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.65rem;
+}
+
+.table-responsive-custom {
+    overflow-x: auto;
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+.statement-table {
+    width: 100%;
+    font-size: 0.7rem;
+    border-collapse: collapse;
+}
+
+.statement-table th {
+    background: #f8fafc;
+    padding: 10px 6px;
+    font-weight: 700;
+    color: #475569;
+    position: sticky;
+    top: 0;
+}
+
+.statement-table td {
+    padding: 10px 6px;
+    border-bottom: 1px solid #eef2f6;
+}
+
+.income-row td:first-child,
+.income-row td:nth-child(3) {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.expense-row td:first-child,
+.expense-row td:nth-child(3) {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #94a3b8;
+}
+
+.empty-state i {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    opacity: 0.5;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+    .header-bar, .filter-card, .export-buttons, .back-btn, .logout-btn-sm {
+        display: none;
+    }
+    .statement-card {
+        box-shadow: none;
+        padding: 0;
+    }
+    .summary-cards {
+        break-inside: avoid;
+    }
+    .statement-table {
+        font-size: 10pt;
+    }
+}
+
+.toast-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    z-index: 1001;
+    animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container-custom">
+    
+    <div class="header-bar">
+        <button onclick="goBack()" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <div class="user-badge">
+            <i class="fas fa-file-alt"></i> Statement
+        </div>
+    </div>
+    
+    <!-- Filter Card -->
+    <div class="filter-card">
+        <div class="filter-title">
+            <i class="fas fa-filter"></i>
+            <span>Filter Transactions</span>
+        </div>
+        
+        <div class="date-range">
+            <div class="date-input">
+                <div class="date-label">From Date</div>
+                <input type="date" id="fromDate" class="date-field">
+            </div>
+            <div class="date-input">
+                <div class="date-label">To Date</div>
+                <input type="date" id="toDate" class="date-field">
+            </div>
+        </div>
+        
+        <div class="filter-type">
+            <button class="filter-btn active" id="filterAll" onclick="setFilter('all')">All</button>
+            <button class="filter-btn" id="filterIncome" onclick="setFilter('income')">Income Only</button>
+            <button class="filter-btn" id="filterExpense" onclick="setFilter('expense')">Expense Only</button>
+        </div>
+        
+        <div class="filter-actions">
+            <button onclick="applyFilter()" class="btn-filter">
+                <i class="fas fa-search"></i> Apply Filter
+            </button>
+            <button onclick="resetFilter()" class="btn-reset">
+                <i class="fas fa-undo"></i> Reset
+            </button>
+        </div>
+        
+        <div class="export-buttons">
+            <button onclick="exportPDF()" class="btn-export btn-pdf">
+                <i class="fas fa-file-pdf"></i> PDF
+            </button>
+            <button onclick="exportPrint()" class="btn-export btn-print">
+                <i class="fas fa-print"></i> Print
+            </button>
+            <button onclick="exportCSV()" class="btn-export btn-csv">
+                <i class="fas fa-file-excel"></i> CSV
+            </button>
+        </div>
+    </div>
+    
+    <!-- Summary Cards -->
+    <div class="summary-cards" id="summaryCards">
+        <div class="summary-card">
+            <div class="summary-label">Total Income</div>
+            <div class="summary-value income-summary" id="totalIncome">₹0</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-label">Total Expense</div>
+            <div class="summary-value expense-summary" id="totalExpense">₹0</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-label">Net Balance</div>
+            <div class="summary-value balance-summary" id="netBalance">₹0</div>
+        </div>
+    </div>
+    
+    <!-- Statement Table -->
+    <div class="statement-card" id="statementContent">
+        <div class="table-header">
+            <h6><i class="fas fa-list"></i> Transaction Statement</h6>
+            <span class="record-count" id="recordCount">0</span>
+        </div>
+        <div class="table-responsive-custom">
+            <table class="statement-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Category/Source</th>
+                        <th>Mode</th>
+                    </tr>
+                </thead>
+                <tbody id="statementTable"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const supabaseUrl = "https://iydamvrlxtwsnqvflaxq.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml5ZGFtdnJseHR3c25xdmZsYXhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgwOTczMTIsImV4cCI6MjA3MzY3MzMxMn0.Z8m6XGyu9wsN_UJ8EZYr12BRemsO12_U8EEZ9JizQ6w";
+
+const client = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+let currentFilter = 'all';
+let currentFromDate = '';
+let currentToDate = '';
+
+// Set default dates (last 30 days)
+function setDefaultDates() {
+    const today = new Date();
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(today.getDate() - 30);
+    
+    document.getElementById("fromDate").value = thirtyDaysAgo.toISOString().split('T')[0];
+    document.getElementById("toDate").value = today.toISOString().split('T')[0];
+    
+    currentFromDate = document.getElementById("fromDate").value;
+    currentToDate = document.getElementById("toDate").value;
+}
+
+// Set filter type
+function setFilter(type) {
+    currentFilter = type;
+    
+    // Update button styles
+    document.getElementById("filterAll").classList.remove('active');
+    document.getElementById("filterIncome").classList.remove('active');
+    document.getElementById("filterExpense").classList.remove('active');
+    
+    if(type === 'all') {
+        document.getElementById("filterAll").classList.add('active');
+    } else if(type === 'income') {
+        document.getElementById("filterIncome").classList.add('active');
+    } else {
+        document.getElementById("filterExpense").classList.add('active');
+    }
+    
+    applyFilter();
+}
+
+// Apply filter
+function applyFilter() {
+    currentFromDate = document.getElementById("fromDate").value;
+    currentToDate = document.getElementById("toDate").value;
+    
+    if(!currentFromDate || !currentToDate) {
+        showToast("Please select both dates", "error");
+        return;
+    }
+    
+    loadStatement();
+}
+
+// Reset filter
+function resetFilter() {
+    setDefaultDates();
+    setFilter('all');
+    loadStatement();
+}
+
+// Load statement data
+async function loadStatement() {
+    try {
+        const fromDate = new Date(currentFromDate);
+        const toDate = new Date(currentToDate);
+        toDate.setHours(23, 59, 59);
+        
+        let allTransactions = [];
+        
+        // Load Income
+        const { data: incomeData, error: incomeError } = await client
+            .from('income')
+            .select('*')
+            .gte('created_at', fromDate.toISOString())
+            .lte('created_at', toDate.toISOString())
+            .order('created_at', { ascending: false });
+        
+        if(incomeError) throw incomeError;
+        
+        // Load Expense
+        const { data: expenseData, error: expenseError } = await client
+            .from('expense')
+            .select('*')
+            .gte('created_at', fromDate.toISOString())
+            .lte('created_at', toDate.toISOString())
+            .order('created_at', { ascending: false });
+        
+        if(expenseError) throw expenseError;
+        
+        // Add type to transactions
+        if(incomeData) {
+            incomeData.forEach(t => {
+                allTransactions.push({
+                    ...t,
+                    type: 'income',
+                    category: t.source,
+                    amount: t.amount
+                });
+            });
+        }
+        
+        if(expenseData) {
+            expenseData.forEach(t => {
+                allTransactions.push({
+                    ...t,
+                    type: 'expense',
+                    category: t.category,
+                    amount: t.amount
+                });
+            });
+        }
+        
+        // Apply filter
+        if(currentFilter === 'income') {
+            allTransactions = allTransactions.filter(t => t.type === 'income');
+        } else if(currentFilter === 'expense') {
+            allTransactions = allTransactions.filter(t => t.type === 'expense');
+        }
+        
+        // Sort by date (newest first)
+        allTransactions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        
+        // Calculate totals
+        let totalIncome = 0;
+        let totalExpense = 0;
+        
+        allTransactions.forEach(t => {
+            if(t.type === 'income') {
+                totalIncome += t.amount;
+            } else {
+                totalExpense += t.amount;
+            }
+        });
+        
+        const netBalance = totalIncome - totalExpense;
+        
+        // Update summary
+        document.getElementById("totalIncome").innerHTML = `₹${totalIncome.toLocaleString('en-IN')}`;
+        document.getElementById("totalExpense").innerHTML = `₹${totalExpense.toLocaleString('en-IN')}`;
+        document.getElementById("netBalance").innerHTML = `₹${netBalance.toLocaleString('en-IN')}`;
+        document.getElementById("recordCount").innerText = allTransactions.length;
+        
+        // Render table
+        renderTable(allTransactions);
+        
+    } catch(error) {
+        console.error("Load error:", error);
+        showToast("Failed to load data", "error");
+    }
+}
+
+// Render table
+function renderTable(transactions) {
+    const tbody = document.getElementById("statementTable");
+    
+    if(transactions.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p>No transactions found</p>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+    
+    let html = "";
+    transactions.forEach(t => {
+        const date = new Date(t.created_at);
+        const dateStr = date.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+        const amount = `₹${t.amount.toLocaleString('en-IN')}`;
+        const modeIcon = t.mode === 'cash' ? '💵' : '📱';
+        const modeText = t.mode === 'cash' ? 'Cash' : 'UPI';
+        
+        if(t.type === 'income') {
+            html += `
+                <tr class="income-row">
+                    <td>${dateStr}</td>
+                    <td><span class="badge bg-success">Income</span></td>
+                    <td style="color: #28a745; font-weight: 700;">+${amount}</td>
+                    <td>${t.category || t.source || '-'}</td>
+                    <td>${modeIcon} ${modeText}</td>
+                </tr>
+            `;
+        } else {
+            html += `
+                <tr class="expense-row">
+                    <td>${dateStr}</td>
+                    <td><span class="badge bg-danger">Expense</span></td>
+                    <td style="color: #dc3545; font-weight: 700;">-${amount}</td>
+                    <td>${t.category || '-'}</td>
+                    <td>${modeIcon} ${modeText}</td>
+                </tr>
+            `;
+        }
+    });
+    
+    tbody.innerHTML = html;
+}
+
+// Export to PDF
+async function exportPDF() {
+    const element = document.getElementById("statementContent");
+    const summaryCards = document.getElementById("summaryCards");
+    const filterInfo = document.createElement('div');
+    
+    filterInfo.style.padding = '10px';
+    filterInfo.style.marginBottom = '10px';
+    filterInfo.style.backgroundColor = '#f8fafc';
+    filterInfo.style.borderRadius = '8px';
+    filterInfo.style.fontSize = '12px';
+    filterInfo.innerHTML = `
+        <strong>Filter:</strong> ${currentFilter === 'all' ? 'All Transactions' : currentFilter === 'income' ? 'Income Only' : 'Expense Only'} | 
+        <strong>Period:</strong> ${currentFromDate} to ${currentToDate}
+    `;
+    
+    const cloneSummary = summaryCards.cloneNode(true);
+    const cloneContent = element.cloneNode(true);
+    const wrapper = document.createElement('div');
+    wrapper.appendChild(filterInfo);
+    wrapper.appendChild(cloneSummary);
+    wrapper.appendChild(cloneContent);
+    
+    const opt = {
+        margin: [0.5, 0.5, 0.5, 0.5],
+        filename: `statement_${currentFromDate}_to_${currentToDate}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+    
+    html2pdf().set(opt).from(wrapper).save();
+    showToast("PDF generated successfully!", "success");
+}
+
+// Export to Print
+function exportPrint() {
+    const originalTitle = document.title;
+    document.title = `Statement ${currentFromDate} to ${currentToDate}`;
+    window.print();
+    document.title = originalTitle;
+}
+
+// Export to CSV
+function exportCSV() {
+    // Get current visible transactions
+    const rows = document.querySelectorAll("#statementTable tr");
+    let csvContent = "Date,Type,Amount,Category/Source,Mode\n";
+    
+    rows.forEach(row => {
+        if(row.classList.contains('empty-state')) return;
+        
+        const cells = row.querySelectorAll("td");
+        if(cells.length === 5) {
+            const date = cells[0].innerText;
+            let type = cells[1].innerText;
+            let amount = cells[2].innerText;
+            const category = cells[3].innerText;
+            const mode = cells[4].innerText;
+            
+            // Clean amount
+            amount = amount.replace('+', '').replace('-', '');
+            
+            csvContent += `"${date}","${type}","${amount}","${category}","${mode}"\n`;
+        }
+    });
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `statement_${currentFromDate}_to_${currentToDate}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    showToast("CSV exported successfully!", "success");
+}
+
+// Show toast
+function showToast(msg, type = "success") {
+    const toast = document.createElement("div");
+    toast.className = "toast-message";
+    toast.style.background = type === "success" ? "#28a745" : "#dc3545";
+    toast.style.color = "white";
+    toast.innerHTML = `<i class="fas fa-${type === "success" ? "check-circle" : "exclamation-circle"}"></i> ${msg}`;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2500);
+}
+
+// Go back
+function goBack() {
+    window.location.href = "dashboard.html";
+}
+
+// Initialize
+setDefaultDates();
+loadStatement();
+</script>
+
+</body>
+</html>
